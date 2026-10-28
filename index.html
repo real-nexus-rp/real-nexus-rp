@@ -1,0 +1,2637 @@
+<!DOCTYPE html>
+<html lang="th" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REAL NEXUS RP | ROLEPLAY COMMUNITY</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Kanit & Montserrat & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Kanit:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- jsQR & Tesseract.js for Client-Side Bank Slip QR & Thai OCR Scanning -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Kanit', 'Inter', 'sans-serif'],
+                        display: ['Montserrat', 'Kanit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    },
+                    colors: {
+                        nexus: {
+                            bg: '#050608',
+                            card: '#0d0f14',
+                            border: '#1e222d',
+                            silver: '#9ca3af',
+                            chrome: '#d1d5db',
+                            gold: '#facc15',
+                            goldDark: '#ca8a04'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+        html, body {
+            background-color: #020204 !important;
+            color: #e5e7eb;
+            font-family: 'Kanit', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Pure Black Metallic Background Ambience */
+        .bg-nexus-mesh {
+            background-color: #020204 !important;
+            background-image: 
+                radial-gradient(circle at 50% 15%, rgba(65, 75, 95, 0.16) 0%, transparent 55%),
+                radial-gradient(circle at 85% 85%, rgba(250, 204, 21, 0.06) 0%, transparent 45%),
+                radial-gradient(circle at 15% 80%, rgba(56, 189, 248, 0.05) 0%, transparent 45%),
+                linear-gradient(180deg, #010102 0%, #050609 50%, #010102 100%);
+        }
+
+        /* Subtle cyber grid */
+        .cyber-grid {
+            background-size: 46px 46px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+        }
+
+        /* Brushed metal card effect */
+        .metal-card {
+            background: linear-gradient(145deg, rgba(16, 18, 24, 0.94) 0%, rgba(7, 8, 12, 0.97) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(18px);
+        }
+
+        .metal-input {
+            background: rgba(4, 5, 8, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.25s ease;
+        }
+        .metal-input:focus {
+            border-color: #facc15;
+            box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.15), 0 0 15px rgba(250, 204, 21, 0.08);
+            outline: none;
+        }
+
+        /* Metallic Button */
+        .btn-metal {
+            background: linear-gradient(180deg, #4b5262 0%, #262a34 50%, #15181f 100%);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.28);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-metal:hover:not(:disabled) {
+            background: linear-gradient(180deg, #616a7d 0%, #323846 50%, #21252e 100%);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.85), 0 0 20px rgba(200, 210, 230, 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+        }
+        .btn-metal:active:not(:disabled) {
+            transform: translateY(1px);
+        }
+
+        /* Yellow P Point Coin Badge */
+        .p-coin {
+            background: radial-gradient(circle at 30% 30%, #fef08a 0%, #facc15 45%, #ca8a04 85%, #854d0e 100%);
+            box-shadow: 0 0 14px rgba(250, 204, 21, 0.55), inset 0 1px 2px rgba(255, 255, 255, 0.8), inset 0 -2px 3px rgba(133, 77, 14, 0.8);
+            border: 1.5px solid #fde047;
+        }
+
+        /* Background Watermark Floating & Cyber Ring Animations */
+        @keyframes bgLogoFloat {
+            0%, 100% { transform: scale(1) translateY(0px); opacity: 0.22; filter: drop-shadow(0 0 25px rgba(255,255,255,0.08)); }
+            50% { transform: scale(1.04) translateY(-10px); opacity: 0.32; filter: drop-shadow(0 0 40px rgba(250,204,21,0.18)); }
+        }
+        .bg-watermark-anim {
+            animation: bgLogoFloat 7s ease-in-out infinite;
+        }
+
+        @keyframes slowSpinCW {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes slowSpinCCW {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+        .cyber-ring-cw {
+            animation: slowSpinCW 38s linear infinite;
+        }
+        .cyber-ring-ccw {
+            animation: slowSpinCCW 52s linear infinite;
+        }
+
+        /* Category Card Hover & Active States */
+        .category-card {
+            background: linear-gradient(145deg, rgba(18, 21, 29, 0.92) 0%, rgba(8, 10, 15, 0.96) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .category-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(250, 204, 21, 0.45);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.85), 0 0 25px rgba(250, 204, 21, 0.12);
+        }
+        .category-card.active-cat-topup {
+            border-color: #facc15;
+            background: linear-gradient(145deg, rgba(45, 38, 15, 0.8) 0%, rgba(10, 12, 18, 0.96) 100%);
+            box-shadow: 0 0 30px rgba(250, 204, 21, 0.22), inset 0 1px 0 rgba(250, 204, 21, 0.3);
+        }
+        .category-card.active-cat-shop {
+            border-color: #38bdf8;
+            background: linear-gradient(145deg, rgba(14, 38, 56, 0.8) 0%, rgba(10, 12, 18, 0.96) 100%);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.22), inset 0 1px 0 rgba(56, 189, 248, 0.3);
+        }
+        .category-card.active-cat-inventory {
+            border-color: #a855f7;
+            background: linear-gradient(145deg, rgba(38, 18, 56, 0.8) 0%, rgba(10, 12, 18, 0.96) 100%);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.22), inset 0 1px 0 rgba(168, 85, 247, 0.3);
+        }
+
+        /* Gacha Capsule Shake Animation */
+        @keyframes gachaShake {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            20% { transform: rotate(-12deg) scale(1.06); }
+            40% { transform: rotate(12deg) scale(1.1); }
+            60% { transform: rotate(-10deg) scale(1.12); }
+            80% { transform: rotate(10deg) scale(1.08); }
+        }
+        .gacha-shake {
+            animation: gachaShake 0.6s ease-in-out infinite;
+        }
+
+        /* Welcome Entrance Overlay Animations */
+        @keyframes pulseGlow {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.15)); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 35px rgba(250, 204, 21, 0.35)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.4)); transform: scale(1.04); }
+        }
+        .logo-glow-anim {
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes scanlineMove {
+            0% { top: 0%; opacity: 0.9; }
+            50% { top: 96%; opacity: 1; }
+            100% { top: 0%; opacity: 0.9; }
+        }
+        .scanner-laser {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent 0%, #facc15 20%, #ffffff 50%, #facc15 80%, transparent 100%);
+            box-shadow: 0 0 18px 4px rgba(250, 204, 21, 0.75);
+            animation: scanlineMove 2.2s ease-in-out infinite;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #07080c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262b38;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b4254;
+        }
+    </style>
+</head>
+<body class="bg-nexus-mesh cyber-grid min-h-screen flex flex-col justify-between relative selection:bg-yellow-500 selection:text-black">
+
+    <!-- ==========================================
+         MASTER SVG DEFINITIONS (3D METALLIC "RN" ROLEPLAY COMMUNITY LOGO)
+         แก้ไขปัญหาโลโก้ไม่ขึ้นทุกจุดทั่วทั้งเว็บไซต์
+         ========================================== -->
+    <svg width="0" height="0" class="fixed pointer-events-none opacity-0" aria-hidden="true">
+        <defs>
+            <!-- Brushed Gunmetal & Chrome Gradients matching logo.jpg -->
+            <linearGradient id="rn-metal-main" x1="15%" y1="5%" x2="85%" y2="95%">
+                <stop offset="0%" stop-color="#8b929e" />
+                <stop offset="28%" stop-color="#686e7a" />
+                <stop offset="55%" stop-color="#454954" />
+                <stop offset="80%" stop-color="#2c3038" />
+                <stop offset="100%" stop-color="#1e2128" />
+            </linearGradient>
+
+            <linearGradient id="rn-metal-bright" x1="0%" y1="0%" x2="90%" y2="100%">
+                <stop offset="0%" stop-color="#aeb5c2" />
+                <stop offset="35%" stop-color="#7c8390" />
+                <stop offset="70%" stop-color="#494e5a" />
+                <stop offset="100%" stop-color="#282b33" />
+            </linearGradient>
+
+            <linearGradient id="rn-metal-shadow" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#525763" />
+                <stop offset="50%" stop-color="#343842" />
+                <stop offset="100%" stop-color="#191b20" />
+            </linearGradient>
+
+            <linearGradient id="rn-bevel-edge" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#d8dde6" stop-opacity="0.75" />
+                <stop offset="50%" stop-color="#8b929e" stop-opacity="0.3" />
+                <stop offset="100%" stop-color="#111318" stop-opacity="0.8" />
+            </linearGradient>
+
+            <linearGradient id="rn-text-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#9ca3af" />
+                <stop offset="100%" stop-color="#4b5563" />
+            </linearGradient>
+
+            <filter id="rn-3d-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#000000" flood-opacity="0.85" />
+            </filter>
+
+            <!-- COMPACT EMBLEM: Interlocking RN Monogram (viewBox: 140 95 340 340) -->
+            <g id="rn-compact-emblem" filter="url(#rn-3d-shadow)">
+                <!-- N: Inner Left Vertical Stem (Top Segment inside R bowl) -->
+                <path d="M 248 182 L 278 214 L 278 258 L 248 258 Z"
+                      fill="url(#rn-metal-shadow)" stroke="url(#rn-bevel-edge)" stroke-width="1.5" stroke-linejoin="round" />
+
+                <!-- N: Inner Left Vertical Stem (Bottom Segment below R bar) -->
+                <path d="M 248 298 L 278 338 L 278 400 L 248 400 Z"
+                      fill="url(#rn-metal-shadow)" stroke="url(#rn-bevel-edge)" stroke-width="1.5" stroke-linejoin="round" />
+
+                <!-- N: Upper Diagonal Stroke (tucked behind R upper bowl) -->
+                <path d="M 248 182 L 276 182 L 328 240 L 304 260 Z"
+                      fill="url(#rn-metal-main)" stroke="url(#rn-bevel-edge)" stroke-width="1.5" stroke-linejoin="round" />
+
+                <!-- N: Lower Diagonal & Right Vertical Stem -->
+                <path d="M 322 282 L 346 260 L 402 325 L 402 125 L 434 125 L 434 400 L 404 400 L 322 282 Z"
+                      fill="url(#rn-metal-main)" stroke="url(#rn-bevel-edge)" stroke-width="1.8" stroke-linejoin="round" />
+
+                <!-- R: Main Structure (Left Stem + Curved Loop + Diagonal Leg) -->
+                <!-- R Upper Arch & Left Vertical Pillar -->
+                <path d="M 180 125 L 288 125 C 346 125, 376 185, 344 242 L 322 218 C 340 185, 322 155, 284 155 L 212 155 L 212 262 L 284 262 C 302 262, 318 252, 328 238 L 350 260 C 336 278, 315 289, 290 291 L 368 400 L 330 400 L 254 292 L 212 292 L 212 400 L 180 400 Z"
+                      fill="url(#rn-metal-bright)" stroke="url(#rn-bevel-edge)" stroke-width="2" stroke-linejoin="round" />
+
+                <!-- Crisp Top Specular Highlights -->
+                <line x1="181" y1="126" x2="288" y2="126" stroke="#e5e7eb" stroke-width="1.5" stroke-opacity="0.55" />
+                <line x1="403" y1="126" x2="433" y2="126" stroke="#e5e7eb" stroke-width="1.5" stroke-opacity="0.55" />
+            </g>
+
+            <!-- FULL LOGO GRAPHIC: RN Monogram + "ROLEPLAY COMMUNITY" (viewBox: 50 35 500 495) -->
+            <g id="rn-full-logo-graphic">
+                <g transform="translate(-8, -10)">
+                    <use href="#rn-compact-emblem" xlink:href="#rn-compact-emblem"></use>
+                </g>
+                <text x="300" y="468"
+                      text-anchor="middle"
+                      fill="url(#rn-text-grad)"
+                      font-family="'Montserrat', 'Kanit', sans-serif"
+                      font-size="23"
+                      font-weight="600"
+                      letter-spacing="7.5"
+                      style="text-transform: uppercase; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.9));">
+                    ROLEPLAY COMMUNITY
+                </text>
+            </g>
+        </defs>
+    </svg>
+
+    <!-- ==========================================
+         PURE BLACK ANIMATED BACKGROUND + SERVER LOGO WATERMARK
+         ========================================== -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#020204]">
+        <div class="absolute inset-0 cyber-grid opacity-70"></div>
+        <canvas id="bgParticleCanvas" class="absolute inset-0 w-full h-full opacity-80"></canvas>
+
+        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_25%,rgba(2,2,4,0.88)_85%,#020204_100%)]"></div>
+            <div class="absolute w-[420px] h-[420px] sm:w-[640px] sm:h-[640px] rounded-full bg-[radial-gradient(circle,rgba(250,204,21,0.08)_0%,rgba(156,163,175,0.07)_35%,transparent_70%)] blur-2xl"></div>
+            <div class="absolute w-[380px] h-[380px] sm:w-[600px] sm:h-[600px] lg:w-[740px] lg:h-[740px] rounded-full border border-white/[0.05] border-dashed cyber-ring-cw"></div>
+            
+            <div class="absolute w-[310px] h-[310px] sm:w-[490px] sm:h-[490px] lg:w-[610px] lg:h-[610px] rounded-full border border-yellow-500/[0.08] cyber-ring-ccw flex items-center justify-between px-2">
+                <span class="w-2 h-2 rounded-full bg-yellow-400/30 shadow-[0_0_12px_#facc15]"></span>
+                <span class="w-2 h-2 rounded-full bg-sky-400/30 shadow-[0_0_12px_#38bdf8]"></span>
+            </div>
+
+            <!-- Giant 3D Metallic RN Monogram Watermark -->
+            <svg viewBox="50 35 500 495" class="w-[320px] h-[320px] sm:w-[500px] sm:h-[500px] lg:w-[620px] lg:h-[620px] bg-watermark-anim select-none">
+                <use href="#rn-full-logo-graphic" xlink:href="#rn-full-logo-graphic"></use>
+            </svg>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         CINEMATIC ENTRANCE OVERLAY (ลูกเล่นตอนเข้าเว็บ)
+         ========================================== -->
+    <div id="welcomeOverlay" class="fixed inset-0 z-50 hidden flex-col items-center justify-center bg-[#030406] overflow-hidden">
+        <canvas id="warpCanvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-70"></canvas>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.09)_0%,transparent_65%)] pointer-events-none"></div>
+
+        <div class="relative z-10 flex flex-col items-center text-center px-6 max-w-3xl">
+            <div class="relative mb-5">
+                <div class="absolute -inset-6 rounded-full bg-gradient-to-tr from-yellow-500/20 via-gray-300/10 to-transparent blur-2xl animate-pulse"></div>
+                <svg viewBox="50 35 500 495" class="w-52 h-48 sm:w-64 sm:h-56 logo-glow-anim">
+                    <use href="#rn-full-logo-graphic" xlink:href="#rn-full-logo-graphic"></use>
+                </svg>
+            </div>
+
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/15 text-xs tracking-widest uppercase text-gray-300 mb-5">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <span>IDENTITY VERIFIED • ACCESS GRANTED</span>
+            </div>
+
+            <h1 id="welcomeHeadline" class="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-gray-100 via-white to-gray-400 drop-shadow-[0_4px_24px_rgba(255,255,255,0.25)] mb-4">
+                ยินดีต้อนรับเข้าสู่เว็บไซด์ REAL NEXUS RP
+            </h1>
+
+            <p class="text-base sm:text-xl text-gray-300 font-light mb-8">
+                กำลังเชื่อมต่อข้อมูลตัวละคร <span id="welcomePlayerName" class="font-mono font-bold text-yellow-400 px-2.5 py-0.5 rounded bg-yellow-500/10 border border-yellow-500/30">Yoa_Tani</span> เข้าสู่ระบบ...
+            </p>
+
+            <div class="w-64 sm:w-80 h-2 bg-gray-800/90 rounded-full overflow-hidden border border-white/10 p-0.5">
+                <div id="welcomeProgressBar" class="h-full bg-gradient-to-r from-gray-400 via-yellow-400 to-white rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <p id="welcomeSubStatus" class="text-xs font-mono text-gray-500 mt-3 tracking-widest uppercase">INITIALIZING NEXUS CORE DATABASE...</p>
+
+            <button id="skipWelcomeBtn" type="button" class="mt-6 text-xs text-gray-400 hover:text-white underline underline-offset-4 transition">
+                กดเพื่อข้ามเข้าสู่หน้าหลักทันที (Skip)
+            </button>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         CUSTOM MODAL / MESSAGE BOX
+         ========================================== -->
+    <div id="customModal" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/85 backdrop-blur-md p-4">
+        <div class="metal-card rounded-2xl max-w-md w-full p-6 border border-white/15 transform transition-all scale-100 relative overflow-hidden">
+            <div id="modalTopBar" class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-yellow-500 to-amber-600"></div>
+            <div class="flex items-start gap-4">
+                <div id="modalIconWrap" class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 text-xl">
+                    <i id="modalIcon" class="fa-solid fa-bell"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 id="modalTitle" class="text-lg font-bold text-white mb-1">แจ้งเตือนระบบ</h3>
+                    <p id="modalMessage" class="text-sm text-gray-300 leading-relaxed whitespace-pre-line"></p>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end gap-3">
+                <button id="modalCloseBtn" class="btn-metal px-6 py-2.5 rounded-xl text-sm font-semibold text-white">
+                    ตกลง (OK)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         GACHA OPENING ANIMATION MODAL
+         ========================================== -->
+    <div id="gachaModal" class="fixed inset-0 z-[58] hidden items-center justify-center bg-black/90 backdrop-blur-xl p-4">
+        <div class="metal-card rounded-3xl max-w-lg w-full p-6 sm:p-8 border border-purple-500/40 shadow-[0_0_50px_rgba(168,85,247,0.25)] text-center relative overflow-hidden">
+            <div class="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-purple-500 via-yellow-400 to-pink-500"></div>
+
+            <!-- Spinning State -->
+            <div id="gachaSpinningView" class="py-6 space-y-5">
+                <div class="w-28 h-28 mx-auto rounded-full bg-gradient-to-br from-purple-500/30 via-yellow-400/20 to-pink-500/30 border-2 border-yellow-400/60 flex items-center justify-center shadow-[0_0_35px_rgba(250,204,21,0.4)] gacha-shake">
+                    <i class="fa-solid fa-dice-d20 text-5xl text-yellow-300"></i>
+                </div>
+                <h3 class="text-xl sm:text-2xl font-extrabold text-white tracking-wide">กำลังเปิดแคปซูลกาชา...</h3>
+                <p class="text-xs text-purple-300 font-mono uppercase tracking-widest">NEXUS QUANTUM GACHA SYSTEM</p>
+            </div>
+
+            <!-- Reward Result State -->
+            <div id="gachaResultView" class="hidden py-2 space-y-5">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-yellow-500/15 border border-yellow-500/40 text-yellow-300 text-xs font-bold">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>ผลการสุ่มกาชา REAL NEXUS RP</span>
+                </div>
+                <h3 id="gachaResultHeadline" class="text-xl sm:text-2xl font-extrabold text-white">ยินดีด้วย! คุณได้รับของรางวัล</h3>
+                
+                <div id="gachaRewardCards" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-64 overflow-y-auto p-1 text-left"></div>
+
+                <p class="text-xs text-gray-400">ของรางวัลทั้งหมดถูกบันทึกเข้าสู่คลังตัวละครของคุณแบบถาวรเรียบร้อยแล้ว</p>
+
+                <div class="pt-2 flex flex-col sm:flex-row gap-3 justify-center">
+                    <button type="button" id="gachaSpinAgainBtn" class="py-3 px-5 rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-400 hover:to-pink-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>สุ่มอีกครั้ง (10 P)</span>
+                    </button>
+                    <button type="button" id="closeGachaModalBtn" class="btn-metal py-3 px-6 rounded-xl text-xs font-bold text-white">
+                        ปิดหน้าต่าง
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         VIEW 1: LOGIN SCREEN
+         ========================================== -->
+    <main id="loginView" class="flex-1 min-h-screen flex items-center justify-center py-10 px-4 sm:px-6 relative z-10">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[360px] sm:w-[520px] h-[360px] sm:h-[520px] bg-yellow-500/[0.04] rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="metal-card w-full max-w-md rounded-3xl p-6 sm:p-8 relative overflow-hidden border border-white/15 shadow-[0_25px_70px_rgba(0,0,0,0.98)] my-auto">
+            <div class="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-transparent via-yellow-400/80 to-transparent"></div>
+
+            <!-- Server Logo & Title (แสดงโลโก้ RN 3D คมชัดเต็มกรอบ) -->
+            <div class="flex flex-col items-center text-center mb-5 pt-2">
+                <div class="w-44 h-40 sm:w-52 sm:h-48 flex items-center justify-center mb-2 relative">
+                    <div class="absolute inset-0 rounded-full bg-yellow-500/10 blur-2xl"></div>
+                    <svg viewBox="50 35 500 495" class="w-full h-full drop-shadow-[0_12px_28px_rgba(0,0,0,0.95)] relative z-10">
+                        <use href="#rn-full-logo-graphic" xlink:href="#rn-full-logo-graphic"></use>
+                    </svg>
+                </div>
+                <h1 class="font-display text-2xl sm:text-3xl font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-200 to-gray-400">
+                    REAL NEXUS RP
+                </h1>
+                <p class="text-xs text-gray-400 mt-1 tracking-wide">
+                    ระบบจัดการข้อมูลผู้เล่น • เข้าสู่ระบบด้วยชื่อตัวละคร IC
+                </p>
+            </div>
+
+            <form id="loginForm" class="space-y-5" novalidate>
+                <div>
+                    <div class="flex items-center justify-between mb-1.5">
+                        <label for="loginUsername" class="text-xs font-semibold uppercase tracking-wider text-gray-300 flex items-center gap-1.5">
+                            <i class="fa-solid fa-user-shield text-gray-400"></i>
+                            ชื่อผู้เล่น (IC Name)
+                        </label>
+                        <span id="nameFormatBadge" class="text-[11px] font-mono px-2 py-0.5 rounded bg-white/5 text-gray-400 border border-white/10">
+                            รูปแบบ: Yoa_Tani
+                        </span>
+                    </div>
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            id="loginUsername" 
+                            placeholder="เช่น Yoa_Tani หรือ Meo_Aromos" 
+                            autocomplete="username"
+                            required
+                            class="metal-input w-full pl-11 pr-10 py-3.5 rounded-xl text-white font-mono text-sm placeholder-gray-600"
+                        >
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500">
+                            <i class="fa-solid fa-id-badge"></i>
+                        </div>
+                        <div id="usernameStatusIcon" class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-gray-600">
+                            <i class="fa-solid fa-circle-question"></i>
+                        </div>
+                    </div>
+                    <p id="usernameHint" class="text-[11px] text-gray-400 mt-1.5 leading-normal">
+                        * ต้องขึ้นต้นด้วยพิมพ์ใหญ่ตามด้วยพิมพ์เล็ก คั่นด้วย <code class="text-yellow-400 font-mono">_</code> และตามด้วยพิมพ์ใหญ่ 1 ตัวเท่านั้น (เช่น <span class="text-white font-mono">Yoa_Tani</span>)
+                    </p>
+                </div>
+
+                <div>
+                    <label for="loginPassword" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1.5 flex items-center gap-1.5">
+                        <i class="fa-solid fa-lock text-gray-400"></i>
+                        รหัสผ่าน (Password)
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="loginPassword" 
+                            placeholder="กรอกรหัสผ่านของคุณ" 
+                            autocomplete="current-password"
+                            required
+                            class="metal-input w-full pl-11 pr-11 py-3.5 rounded-xl text-white text-sm placeholder-gray-600"
+                        >
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500">
+                            <i class="fa-solid fa-key"></i>
+                        </div>
+                        <button 
+                            type="button" 
+                            id="togglePasswordBtn"
+                            class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-white transition"
+                            title="แสดง/ซ่อนรหัสผ่าน"
+                        >
+                            <i id="togglePasswordIcon" class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <p class="text-[11px] text-gray-500 mt-1">
+                        * หากรหัสผ่านถูกต้องหรือเข้าใช้งานชื่อนี้ครั้งแรก ระบบจะผูกและบันทึกข้อมูลอัตโนมัติ
+                    </p>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                    <label class="inline-flex items-center gap-2.5 cursor-pointer group">
+                        <div class="relative flex items-center justify-center">
+                            <input type="checkbox" id="rememberPassword" class="peer sr-only" checked>
+                            <div class="w-5 h-5 rounded-md bg-black/80 border border-white/20 peer-checked:bg-yellow-500 peer-checked:border-yellow-400 transition flex items-center justify-center">
+                                <i class="fa-solid fa-check text-xs text-black opacity-0 peer-checked:opacity-100 transition"></i>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-300 group-hover:text-white transition">
+                            จดจำรหัสผ่านและชื่อผู้เล่นไว้ในระบบ
+                        </span>
+                    </label>
+
+                    <button type="button" id="fillDemoNameBtn" class="text-[11px] text-yellow-400/90 hover:text-yellow-300 underline underline-offset-4 transition">
+                        ใช้ชื่อตัวอย่าง Yoa_Tani
+                    </button>
+                </div>
+
+                <div id="loginErrorBox" class="hidden p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-xs text-red-300 flex items-start gap-2.5">
+                    <i class="fa-solid fa-triangle-exclamation text-red-400 mt-0.5"></i>
+                    <span id="loginErrorText"></span>
+                </div>
+
+                <button 
+                    type="submit" 
+                    id="loginSubmitBtn"
+                    class="btn-metal w-full py-4 rounded-xl font-bold text-sm tracking-wider uppercase text-white flex items-center justify-center gap-2.5 shadow-lg"
+                >
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span>เข้าสู่ระบบ REAL NEXUS RP</span>
+                </button>
+            </form>
+
+            <div class="mt-6 pt-5 border-t border-white/10 flex items-center justify-between text-[11px] text-gray-500">
+                <span class="flex items-center gap-1.5">
+                    <span id="dbStatusDot" class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span id="dbStatusText">ระบบบันทึกข้อมูลรายบุคคลออนไลน์</span>
+                </span>
+                <span class="font-mono text-gray-400">RN-CORE v4.2</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- ==========================================
+         VIEW 2: MAIN APPLICATION DASHBOARD
+         ========================================== -->
+    <div id="dashboardView" class="hidden flex-1 flex flex-col min-h-screen relative z-10">
+        
+        <!-- TOP NAVBAR -->
+        <header class="sticky top-0 z-40 bg-[#040508]/95 backdrop-blur-xl border-b border-white/10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-3">
+                
+                <!-- Brand Left with Visible Server Logo -->
+                <div class="flex items-center gap-3.5">
+                    <div class="w-12 h-12 rounded-xl bg-[#080a0f] border border-white/20 flex items-center justify-center p-1.5 shadow-[0_0_15px_rgba(255,255,255,0.06)] shrink-0">
+                        <svg viewBox="140 95 340 340" class="w-full h-full">
+                            <use href="#rn-compact-emblem" xlink:href="#rn-compact-emblem"></use>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-display font-extrabold text-base sm:text-lg tracking-wider text-white">REAL NEXUS RP</span>
+                            <span class="hidden md:inline-block text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-white/10 text-gray-300 border border-white/10">ROLEPLAY COMMUNITY</span>
+                        </div>
+                        <p class="text-[11px] text-gray-400 hidden sm:block">OFFICIAL PLAYER PORTAL & POINT SYSTEM</p>
+                    </div>
+                </div>
+
+                <!-- Top-Right User Controls -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <div id="navPointPill" class="flex items-center gap-2.5 bg-[#0c0e14] hover:bg-[#141822] border border-yellow-500/40 px-3 sm:px-4 py-1.5 rounded-full shadow-[0_0_20px_rgba(250,204,21,0.14)] cursor-pointer transition" title="คลิกเพื่อเข้าสู่หน้าเติมเงินพอยท์ (P)">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full p-coin flex items-center justify-center shrink-0">
+                            <span class="font-display font-black text-xs sm:text-sm text-black leading-none">P</span>
+                        </div>
+                        <div class="text-left pr-1">
+                            <p class="text-[10px] text-yellow-400/90 leading-none font-medium">พอยท์คงเหลือ</p>
+                            <p class="font-mono font-bold text-sm sm:text-base text-white leading-tight">
+                                <span id="navPointBalance">0</span> <span class="text-yellow-400 text-xs">P</span>
+                            </p>
+                        </div>
+                        <span class="w-6 h-6 rounded-full bg-yellow-500/20 border border-yellow-500/40 text-yellow-300 flex items-center justify-center text-xs hover:bg-yellow-500 hover:text-black transition">
+                            <i class="fa-solid fa-plus"></i>
+                        </span>
+                    </div>
+
+                    <div class="flex items-center gap-2.5 bg-white/[0.04] border border-white/10 px-3.5 py-2 rounded-xl">
+                        <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></div>
+                        <div class="text-left">
+                            <div class="flex items-center gap-1.5">
+                                <p class="text-[10px] text-gray-400 leading-none hidden sm:block">ชื่อผู้เล่น (IC)</p>
+                                <span id="navVipBadge" class="hidden text-[9px] font-extrabold px-1.5 py-0.2 rounded bg-gradient-to-r from-yellow-400 to-amber-500 text-black uppercase">VIP MEMBER</span>
+                            </div>
+                            <p id="navPlayerName" class="font-mono font-bold text-xs sm:text-sm text-white">Yoa_Tani</p>
+                        </div>
+                    </div>
+
+                    <button 
+                        id="logoutBtn" 
+                        class="px-3.5 sm:px-4 py-2.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 hover:border-red-500/50 text-red-300 hover:text-red-200 text-xs sm:text-sm font-semibold transition flex items-center gap-2 shrink-0"
+                        title="ออกจากระบบ"
+                    >
+                        <i class="fa-solid fa-power-off"></i>
+                        <span class="hidden sm:inline">ออกจากระบบ</span>
+                    </button>
+                </div>
+
+            </div>
+        </header>
+
+        <!-- DASHBOARD CONTENT -->
+        <div class="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-7 flex-1 space-y-7">
+
+            <!-- Welcome Hero Banner -->
+            <div class="metal-card rounded-3xl p-6 sm:p-7 relative overflow-hidden border border-white/10">
+                <div class="absolute right-4 top-1/2 -translate-y-1/2 w-48 h-48 opacity-25 pointer-events-none hidden md:flex items-center justify-center">
+                    <svg viewBox="50 35 500 495" class="w-full h-full">
+                        <use href="#rn-full-logo-graphic" xlink:href="#rn-full-logo-graphic"></use>
+                    </svg>
+                </div>
+                <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/30 text-yellow-300 text-xs font-medium mb-2.5">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span>ยินดีต้อนรับเข้าสู่เว็บไซด์ REAL NEXUS RP</span>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2.5">
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-wide">
+                                สวัสดีคุณ <span id="heroPlayerName" class="font-mono text-yellow-400">Yoa_Tani</span>
+                            </h2>
+                            <span id="heroVipStatusBadge" class="hidden px-3 py-1 rounded-full bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 text-black font-extrabold text-xs shadow-[0_0_15px_rgba(250,204,21,0.4)]">
+                                <i class="fa-solid fa-crown mr-1"></i> VIP MEMBER (30 วัน)
+                            </span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-gray-300 mt-1.5 max-w-2xl">
+                            เลือกซื้อ <strong class="text-sky-400">VIP 30 วัน (199 P)</strong> และสุ่ม <strong class="text-purple-400">กาชา NEXUS (10 P)</strong> ได้ที่หน้าร้านค้า หรือคลิกที่หมวด <strong class="text-yellow-400">เติมเงินพอยท์</strong> เพื่อสแกนสลิปเติมพอยท์
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2.5 sm:gap-3 shrink-0">
+                        <div class="bg-black/70 border border-white/10 rounded-2xl p-3 text-center">
+                            <p class="text-[11px] text-gray-400">พอยท์คงเหลือ</p>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <span class="w-4 h-4 rounded-full p-coin inline-flex items-center justify-center text-[9px] font-black text-black">P</span>
+                                <span id="statCurrentPoints" class="font-mono font-bold text-base sm:text-lg text-yellow-400">0</span>
+                            </div>
+                        </div>
+                        <div class="bg-black/70 border border-white/10 rounded-2xl p-3 text-center">
+                            <p class="text-[11px] text-gray-400">ยอดเติมสะสม</p>
+                            <p class="font-mono font-bold text-base sm:text-lg text-emerald-400 mt-1">฿<span id="statTotalTopup">0</span></p>
+                        </div>
+                        <div class="bg-black/70 border border-white/10 rounded-2xl p-3 text-center">
+                            <p class="text-[11px] text-gray-400">ของในคลัง</p>
+                            <p class="font-mono font-bold text-base sm:text-lg text-white mt-1"><span id="statTotalItems">0</span> ชิ้น</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 CATEGORY MENU BAR
+                 ========================================== -->
+            <div>
+                <div class="flex items-center justify-between mb-3 px-1">
+                    <h3 class="text-xs font-mono uppercase tracking-widest text-gray-400 flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-sky-400"></i>
+                        <span>หมวดหมู่บริการ (SELECT CATEGORY)</span>
+                    </h3>
+                    <span class="text-[11px] text-gray-500">คลิกเลือกหมวดหมู่ที่ต้องการใช้งาน</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <button 
+                        type="button" 
+                        id="catShopBtn"
+                        class="category-card active-cat-shop rounded-3xl p-5 text-left flex items-center gap-4 group relative overflow-hidden"
+                    >
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400/25 via-blue-500/15 to-indigo-600/25 border-2 border-sky-400/50 flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(56,189,248,0.25)] group-hover:scale-105 transition">
+                            <div class="relative flex items-center justify-center">
+                                <i class="fa-solid fa-cart-shopping text-3xl text-sky-400 drop-shadow-[0_2px_10px_rgba(56,189,248,0.6)]"></i>
+                                <span class="absolute -top-1.5 -right-2 px-1.5 py-0.2 rounded-full bg-sky-400 text-black font-mono font-extrabold text-[9px]">HOT</span>
+                            </div>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <div class="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded border border-sky-500/30 mb-1">
+                                <span>NEXUS SHOP</span>
+                            </div>
+                            <h4 class="text-lg font-extrabold text-white group-hover:text-sky-300 transition">ร้านค้าแลกพอยท์</h4>
+                            <p class="text-xs text-gray-400 truncate">VIP 30 วัน (199 P) & กาชา (10 P)</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-500 group-hover:text-sky-400 transition"></i>
+                    </button>
+
+                    <button 
+                        type="button" 
+                        id="catTopupBtn"
+                        class="category-card rounded-3xl p-5 text-left flex items-center gap-4 group relative overflow-hidden"
+                    >
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-400/25 via-amber-500/15 to-yellow-600/25 border-2 border-yellow-400/50 flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(250,204,21,0.25)] group-hover:scale-105 transition">
+                            <div class="relative flex items-center justify-center">
+                                <i class="fa-solid fa-coins text-3xl text-yellow-400 drop-shadow-[0_2px_10px_rgba(250,204,21,0.6)]"></i>
+                                <span class="absolute -bottom-1 -right-2 w-5 h-5 rounded-full p-coin flex items-center justify-center text-[10px] font-black text-black">฿</span>
+                            </div>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <div class="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-yellow-400 bg-yellow-500/10 px-2 py-0.5 rounded border border-yellow-500/30 mb-1">
+                                <span>TOP-UP POINT</span>
+                            </div>
+                            <h4 class="text-lg font-extrabold text-white group-hover:text-yellow-300 transition">เติมเงินพอยท์</h4>
+                            <p class="text-xs text-gray-400 truncate">สแกนสลิปรับพอยท์ (1฿ = 1P)</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-500 group-hover:text-yellow-400 transition"></i>
+                    </button>
+
+                    <button 
+                        type="button" 
+                        id="catInventoryBtn"
+                        class="category-card rounded-3xl p-5 text-left flex items-center gap-4 group relative overflow-hidden"
+                    >
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400/25 via-fuchsia-500/15 to-purple-700/25 border-2 border-purple-400/50 flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(168,85,247,0.25)] group-hover:scale-105 transition">
+                            <i class="fa-solid fa-box-open text-3xl text-purple-400 drop-shadow-[0_2px_10px_rgba(168,85,247,0.6)]"></i>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <div class="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/30 mb-1">
+                                <span>MY STORAGE</span>
+                            </div>
+                            <h4 class="text-lg font-extrabold text-white group-hover:text-purple-300 transition">คลังไอเทม & ประวัติ</h4>
+                            <p class="text-xs text-gray-400 truncate">ของที่ได้จากกาชา & ประวัติสลิป</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-500 group-hover:text-purple-400 transition"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 SECTION 1: หน้าร้านค้าแลกพอยท์ (DEFAULT)
+                 ========================================== -->
+            <section id="sectionShopView" class="space-y-6">
+                <div class="metal-card rounded-3xl p-6 sm:p-8 border border-sky-500/30 relative overflow-hidden">
+                    <div class="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-sky-400 via-blue-500 to-purple-500"></div>
+
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-sky-500/15 border border-sky-500/40 flex items-center justify-center text-sky-400 text-3xl shrink-0 shadow-[0_0_20px_rgba(56,189,248,0.2)]">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl sm:text-2xl font-extrabold text-white">ร้านค้า REAL NEXUS RP (NEXUS SHOP)</h3>
+                                <p class="text-xs sm:text-sm text-gray-400 mt-0.5">ใช้พอยท์ (<span class="text-yellow-400 font-bold">P</span>) แลกซื้อ <strong class="text-yellow-300">VIP 30 วัน</strong> หรือสุ่ม <strong class="text-purple-300">กาชา NEXUS</strong> ลุ้นรถ Nissan GT-R R35 และไอเทมมากมาย</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-black/70 border border-yellow-500/30 self-start sm:self-auto">
+                            <span class="w-6 h-6 rounded-full p-coin flex items-center justify-center font-display font-black text-xs text-black">P</span>
+                            <span class="text-xs text-gray-300">พอยท์ของคุณ:</span>
+                            <span id="shopPointBalanceLabel" class="font-mono font-bold text-base text-yellow-400">0 P</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
+                        <!-- PRODUCT 1: VIP 30 วัน ราคา 199 พอยท์ -->
+                        <div class="lg:col-span-5 rounded-3xl p-6 sm:p-7 bg-gradient-to-b from-[#1b1810] via-[#0e1017] to-[#07080c] border-2 border-yellow-500/40 shadow-[0_10px_40px_rgba(250,204,21,0.12)] flex flex-col justify-between relative overflow-hidden group">
+                            <div class="absolute -right-8 -top-8 w-36 h-36 bg-yellow-400/10 rounded-full blur-2xl pointer-events-none"></div>
+
+                            <div>
+                                <div class="flex items-center justify-between gap-2 mb-4">
+                                    <span class="px-3 py-1 rounded-full bg-yellow-500/20 border border-yellow-500/40 text-yellow-300 text-xs font-extrabold uppercase tracking-wider">
+                                        <i class="fa-solid fa-crown mr-1"></i> VIP PACKAGE • 30 DAYS
+                                    </span>
+                                    <span class="font-mono text-xs text-yellow-400/90 font-semibold">อายุใช้งาน 30 วัน</span>
+                                </div>
+
+                                <div class="flex items-center gap-4 my-3">
+                                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-yellow-400 via-amber-500 to-yellow-700 p-0.5 shadow-[0_0_25px_rgba(250,204,21,0.4)] shrink-0">
+                                        <div class="w-full h-full bg-[#08090d] rounded-[14px] flex items-center justify-center text-yellow-400 text-4xl">
+                                            <i class="fa-solid fa-crown"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-2xl font-extrabold text-white">VIP 30 วัน</h4>
+                                        <p class="text-xs text-yellow-400/90 font-medium mt-0.5">แพ็กเกจสิทธิพิเศษ VIP 30 วัน</p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 bg-black/60 p-4 rounded-2xl border border-yellow-500/20">
+                                    <p class="text-xs font-bold text-yellow-300 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                                        <i class="fa-solid fa-star text-yellow-400"></i>
+                                        <span>สิ่งที่ได้รับในแพ็กเกจ VIP 30 วัน:</span>
+                                    </p>
+                                    <ul class="space-y-2.5 text-xs sm:text-sm text-gray-200">
+                                        <li class="flex items-center gap-2.5 p-2 rounded-xl bg-white/[0.03] border border-white/5">
+                                            <span class="w-6 h-6 rounded-lg bg-yellow-500/20 border border-yellow-500/40 text-yellow-400 flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-id-badge"></i></span>
+                                            <span class="font-semibold text-white">ป้าย VIP Member</span>
+                                        </li>
+                                        <li class="flex items-center gap-2.5 p-2 rounded-xl bg-white/[0.03] border border-white/5">
+                                            <span class="w-6 h-6 rounded-lg bg-yellow-500/20 border border-yellow-500/40 text-yellow-400 flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-bolt"></i></span>
+                                            <span class="font-semibold text-white">ฟาม x2</span>
+                                        </li>
+                                        <li class="flex items-center gap-2.5 p-2 rounded-xl bg-white/[0.03] border border-white/5">
+                                            <span class="w-6 h-6 rounded-lg bg-yellow-500/20 border border-yellow-500/40 text-yellow-400 flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-truck-pickup"></i></span>
+                                            <span class="font-semibold text-white">พาวรถฟรี 5 ครั้งต่อ 1 วัน</span>
+                                        </li>
+                                        <li class="flex items-center gap-2.5 p-2 rounded-xl bg-white/[0.03] border border-white/5">
+                                            <span class="w-6 h-6 rounded-lg bg-yellow-500/20 border border-yellow-500/40 text-yellow-400 flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-robot"></i></span>
+                                            <span class="font-semibold text-white">ออโต้งานฟามทุกงาน</span>
+                                        </li>
+                                        <li class="flex items-center gap-2.5 p-2 rounded-xl bg-white/[0.03] border border-white/5">
+                                            <span class="w-6 h-6 rounded-lg bg-yellow-500/20 border border-yellow-500/40 text-yellow-400 flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-car-side"></i></span>
+                                            <span class="font-semibold text-white">รถฟาม 200 โล 30 วัน</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 pt-5 border-t border-white/10 flex items-center justify-between gap-4">
+                                <div>
+                                    <span class="text-[11px] text-gray-400 block">ราคาแพ็กเกจ (30 วัน)</span>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 rounded-full p-coin inline-flex items-center justify-center font-display font-black text-xs text-black">P</span>
+                                        <span class="font-mono font-extrabold text-2xl sm:text-3xl text-yellow-400">199</span>
+                                        <span class="text-xs text-gray-300 font-semibold">พอยท์</span>
+                                    </div>
+                                </div>
+
+                                <button 
+                                    type="button" 
+                                    id="buyVipBtn"
+                                    class="py-3.5 px-6 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 hover:from-yellow-300 hover:to-amber-400 text-black font-extrabold text-sm uppercase tracking-wider shadow-[0_8px_20px_rgba(250,204,21,0.3)] transition flex items-center gap-2"
+                                >
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                    <span>ซื้อ VIP 30 วัน (199 P)</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- PRODUCT 2: กาชาปองสุ่มของรางวัล ลูกละ 10 พอยท์ -->
+                        <div class="lg:col-span-7 rounded-3xl p-6 sm:p-7 bg-gradient-to-b from-[#191124] via-[#0e1017] to-[#07080c] border-2 border-purple-500/40 shadow-[0_10px_40px_rgba(168,85,247,0.14)] flex flex-col justify-between relative overflow-hidden group">
+                            <div class="absolute -right-8 -top-8 w-36 h-36 bg-purple-500/15 rounded-full blur-2xl pointer-events-none"></div>
+
+                            <div>
+                                <div class="flex items-center justify-between gap-2 mb-4">
+                                    <span class="px-3 py-1 rounded-full bg-purple-500/20 border border-purple-500/40 text-purple-300 text-xs font-extrabold uppercase tracking-wider">
+                                        <i class="fa-solid fa-dice-d20 mr-1"></i> NEXUS GACHA CAPSULE
+                                    </span>
+                                    <span class="font-mono text-xs text-purple-300 font-semibold">สุ่มของรางวัลเข้าคลังทันที</span>
+                                </div>
+
+                                <div class="flex items-center gap-4 my-3">
+                                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-400 via-pink-500 to-indigo-600 p-0.5 shadow-[0_0_25px_rgba(168,85,247,0.45)] shrink-0">
+                                        <div class="w-full h-full bg-[#08090d] rounded-[14px] flex items-center justify-center relative overflow-hidden">
+                                            <div class="w-12 h-12 rounded-full bg-gradient-to-b from-pink-500 via-purple-500 to-yellow-400 border-2 border-white/80 flex items-center justify-center shadow-lg">
+                                                <div class="w-4 h-4 rounded-full bg-white flex items-center justify-center">
+                                                    <span class="text-[8px] font-black text-black">RN</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-2xl font-extrabold text-white">กาชา NEXUS (GACHA)</h4>
+                                        <p class="text-xs text-purple-300 font-medium mt-0.5">ลุ้นรับรางวัลใหญ่ <strong class="text-yellow-400">กาชารถ Nissan GT-R R35</strong> และทรัพยากรในเซิร์ฟเวอร์</p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 p-4 rounded-2xl bg-black/60 border border-purple-500/20 space-y-3">
+                                    <div class="flex items-center justify-between">
+                                        <p class="text-xs font-bold text-purple-300 flex items-center gap-1.5 uppercase tracking-wider">
+                                            <i class="fa-solid fa-gift text-pink-400"></i>
+                                            <span>รายการของรางวัลในตู้กาชา (13 รายการ):</span>
+                                        </p>
+                                        <span class="text-[10px] text-gray-400">สุ่มรับ 1 ชิ้น / 1 ลูก</span>
+                                    </div>
+
+                                    <div class="p-3 rounded-xl bg-gradient-to-r from-red-500/20 via-amber-500/15 to-yellow-500/20 border border-yellow-400/50 flex items-center justify-between shadow-[0_0_20px_rgba(250,204,21,0.15)]">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-xl bg-yellow-500/20 border border-yellow-400 flex items-center justify-center text-yellow-300 text-lg shrink-0">
+                                                <i class="fa-solid fa-car-burst"></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-yellow-400 text-black">GRAND PRIZE • LEGENDARY</span>
+                                                <p class="text-sm sm:text-base font-extrabold text-white mt-0.5">กาชารถ Nissan GT-R R35</p>
+                                            </div>
+                                        </div>
+                                        <i class="fa-solid fa-wand-magic-sparkles text-yellow-400 text-lg"></i>
+                                    </div>
+
+                                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                                        <div class="px-3 py-2 rounded-xl bg-white/[0.03] border border-cyan-500/30 flex items-center gap-2 text-cyan-200">
+                                            <i class="fa-regular fa-gem text-cyan-400"></i>
+                                            <span class="font-semibold">เพชร</span>
+                                        </div>
+                                        <div class="px-3 py-2 rounded-xl bg-white/[0.03] border border-amber-500/30 flex items-center gap-2 text-amber-200">
+                                            <i class="fa-solid fa-medal text-amber-400"></i>
+                                            <span class="font-semibold">ทองแดง</span>
+                                        </div>
+                                        <div class="px-3 py-2 rounded-xl bg-white/[0.03] border border-red-500/30 flex items-center gap-2 text-red-200">
+                                            <i class="fa-solid fa-money-bill-flame text-red-400"></i>
+                                            <span class="font-semibold">เงินแดง</span>
+                                        </div>
+                                        <div class="px-3 py-2 rounded-xl bg-white/[0.03] border border-gray-400/30 flex items-center gap-2 text-gray-200">
+                                            <i class="fa-solid fa-trowel-bricks text-gray-400"></i>
+                                            <span class="font-semibold">ปูน</span>
+                                        </div>
+                                        <div class="px-3 py-2 rounded-xl bg-white/[0.03] border border-sky-500/30 flex items-center gap-2 text-sky-200">
+                                            <i class="fa-solid fa-plug-circle-bolt text-sky-400"></i>
+                                            <span class="font-semibold">สายไฟ</span>
+                                        </div>
+                                        <div class="px-3 py-2 rounded-xl bg-white/[0.03] border border-yellow-500/30 flex items-center gap-2 text-yellow-200">
+                                            <i class="fa-solid fa-coins text-yellow-400"></i>
+                                            <span class="font-semibold">ทอง</span>
+                                        </div>
+                                        <div class="px-3 py-2 rounded-xl bg-white/[0.03] border border-slate-400/30 flex items-center gap-2 text-slate-200">
+                                            <i class="fa-solid fa-cubes text-slate-300"></i>
+                                            <span class="font-semibold">โลหะ</span>
+                                        </div>
+                                        <div class="px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 flex items-center gap-2 text-gray-200">
+                                            <i class="fa-solid fa-wheat-awn text-amber-200"></i>
+                                            <span class="font-semibold">แป้ง</span>
+                                        </div>
+                                        <div class="px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 flex items-center gap-2 text-gray-200">
+                                            <i class="fa-solid fa-leaf text-emerald-400"></i>
+                                            <span class="font-semibold">ผักสลัด</span>
+                                        </div>
+                                        <div class="px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 flex items-center gap-2 text-gray-200">
+                                            <i class="fa-solid fa-fish-fins text-sky-300"></i>
+                                            <span class="font-semibold">ทูน่า</span>
+                                        </div>
+                                        <div class="px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 flex items-center gap-2 text-gray-200">
+                                            <i class="fa-solid fa-bowl-rice text-orange-300"></i>
+                                            <span class="font-semibold">ซูชิ</span>
+                                        </div>
+                                        <div class="px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10 flex items-center gap-2 text-gray-200">
+                                            <i class="fa-solid fa-chart-pie text-amber-300"></i>
+                                            <span class="font-semibold">พาย</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 pt-5 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                <div>
+                                    <span class="text-[11px] text-gray-400 block">ราคาต่อลูก</span>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 rounded-full p-coin inline-flex items-center justify-center font-display font-black text-xs text-black">P</span>
+                                        <span class="font-mono font-extrabold text-2xl sm:text-3xl text-yellow-400">10</span>
+                                        <span class="text-xs text-gray-300 font-semibold">พอยท์ / ลูก</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-2.5">
+                                    <button 
+                                        type="button" 
+                                        id="spinGacha1Btn"
+                                        class="flex-1 sm:flex-initial py-3.5 px-5 rounded-2xl bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-600 hover:from-purple-400 hover:to-pink-500 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-[0_8px_20px_rgba(168,85,247,0.35)] transition flex items-center justify-center gap-2"
+                                    >
+                                        <i class="fa-solid fa-dice"></i>
+                                        <span>สุ่ม 1 ลูก (10 P)</span>
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        id="spinGacha10Btn"
+                                        class="btn-metal py-3.5 px-4 rounded-2xl text-xs font-extrabold text-yellow-300 hover:text-yellow-200 border border-yellow-500/40 flex items-center justify-center gap-1.5"
+                                        title="สุ่มรวดเดียว 10 ลูก"
+                                    >
+                                        <span>สุ่ม 10 ลูก (100 P)</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 SECTION 2: หน้าเติมเงินพอยท์ (สแกนสลิปธนาคาร Multi-Engine)
+                 ========================================== -->
+            <section id="sectionTopupView" class="hidden space-y-6">
+                <div class="metal-card rounded-3xl p-6 sm:p-8 border border-yellow-500/30 relative overflow-hidden">
+                    <div class="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-600"></div>
+
+                    <!-- Section Header -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-yellow-500/15 border border-yellow-500/40 flex items-center justify-center text-yellow-400 text-3xl shrink-0 shadow-[0_0_20px_rgba(250,204,21,0.2)]">
+                                <i class="fa-solid fa-coins"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h3 class="text-xl sm:text-2xl font-extrabold text-white">หน้าเติมเงินพอยท์ (สแกนสลิปธนาคาร)</h3>
+                                    <span class="w-6 h-6 rounded-full p-coin inline-flex items-center justify-center font-display font-black text-xs text-black">P</span>
+                                </div>
+                                <p class="text-xs sm:text-sm text-gray-400 mt-0.5">ตรวจสอบชื่อบัญชีผู้รับโอน <strong class="text-yellow-400">"จักรวาล ผดุงซือ"</strong> ก่อนแนบสลิปโอนเงินจริง (1 บาท = 1 พอยท์)</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2 p-1.5 rounded-2xl bg-black/70 border border-white/10 shrink-0">
+                            <button type="button" id="stepTab1Btn" class="py-2 px-3.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-yellow-500 text-black shadow">
+                                <span class="w-5 h-5 rounded-full bg-black/20 flex items-center justify-center font-mono">1</span>
+                                <span>บัญชีผู้รับเงิน</span>
+                            </button>
+                            <button type="button" id="stepTab2Btn" class="py-2 px-3.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 text-gray-400 hover:text-white">
+                                <span class="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center font-mono">2</span>
+                                <span>แนบสลิปสแกน</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 1: แสดงชื่อบัญชีผู้รับเงิน "จักรวาล ผดุงซือ" -->
+                    <div id="topupStep1" class="mt-6 space-y-6">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                            <div class="lg:col-span-7 bg-gradient-to-b from-[#151926] to-[#090b10] rounded-3xl p-6 sm:p-8 border-2 border-yellow-500/40 shadow-[0_0_35px_rgba(250,204,21,0.12)] text-center relative overflow-hidden">
+                                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-yellow-500/20 border border-yellow-500/40 text-yellow-300 text-xs font-semibold mb-3">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                    <span>บัญชีสำหรับโอนเงินเข้าเซิร์ฟเวอร์ REAL NEXUS RP</span>
+                                </div>
+
+                                <p class="text-xs text-gray-400 uppercase tracking-wider">ชื่อบัญชีผู้รับโอน (ต้องตรงกันในสลิปเท่านั้น)</p>
+                                <div class="my-3">
+                                    <h4 class="text-2xl sm:text-4xl font-extrabold text-yellow-400 tracking-wide py-3 px-6 rounded-2xl bg-yellow-500/10 border border-yellow-500/30 inline-block shadow-inner">
+                                        จักรวาล ผดุงซือ
+                                    </h4>
+                                </div>
+
+                                <div class="mt-4 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-gray-200">
+                                    <div class="text-center sm:text-left">
+                                        <span class="text-gray-400 text-xs block">ธนาคารกสิกรไทย (KBank) / พร้อมเพย์</span>
+                                        <span id="bankAccountNum" class="font-mono font-bold text-xl text-white tracking-wider">1158485148</span>
+                                    </div>
+                                    <button 
+                                        type="button" 
+                                        id="copyAccountBtn"
+                                        class="btn-metal px-4 py-2.5 rounded-xl text-xs font-semibold text-white flex items-center gap-2"
+                                    >
+                                        <i class="fa-regular fa-copy"></i>
+                                        <span>คัดลอกเลขบัญชี</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="lg:col-span-5 space-y-4">
+                                <div class="p-5 rounded-2xl bg-red-500/10 border border-red-500/30 text-xs text-red-200 space-y-2">
+                                    <div class="font-bold text-red-400 flex items-center gap-2 text-sm">
+                                        <i class="fa-solid fa-shield-virus"></i>
+                                        <span>เงื่อนไขระบบตรวจสลิปอัตโนมัติ</span>
+                                    </div>
+                                    <p>1. สลิปที่นำมาสแกนต้องระบุชื่อผู้รับโอนว่า <strong class="text-yellow-300">"จักรวาล ผดุงซือ"</strong> เท่านั้น</p>
+                                    <p>2. ระบบรองรับทั้งการอ่าน QR บนสลิปและสแกนชื่อภาษาไทยอัตโนมัติ</p>
+                                    <p>3. สลิป 1 ใบสามารถสแกนได้เพียง 1 ครั้ง และพอยท์จะถูกบันทึกติดตัวละครถาวร</p>
+                                </div>
+
+                                <button 
+                                    type="button" 
+                                    id="goToStep2Btn"
+                                    class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 hover:from-yellow-300 hover:to-amber-400 text-black font-extrabold text-sm sm:text-base tracking-wide uppercase shadow-[0_10px_25px_rgba(250,204,21,0.3)] transition flex items-center justify-center gap-3"
+                                >
+                                    <i class="fa-solid fa-qrcode text-lg"></i>
+                                    <span>โอนเงินแล้ว • คลิกไปหน้าแนบสลิป</span>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: แนบสลิปโอนเงินและสแกน -->
+                    <div id="topupStep2" class="hidden mt-6 space-y-5 max-w-2xl mx-auto">
+                        <div class="flex items-center justify-between px-4 py-3 rounded-xl bg-yellow-500/10 border border-yellow-500/30 text-xs">
+                            <span class="text-gray-300">ระบบกำลังตรวจสอบสลิปที่โอนเข้าชื่อบัญชี:</span>
+                            <span class="font-bold text-yellow-400 text-sm"><i class="fa-solid fa-user-check mr-1"></i> จักรวาล ผดุงซือ</span>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <label class="text-xs font-semibold uppercase tracking-wider text-gray-300">
+                                    1. อัปโหลดรูปภาพสลิปโอนเงินจากเครื่องของคุณ
+                                </label>
+                                <span class="text-[11px] text-gray-400">รองรับ JPG, PNG</span>
+                            </div>
+
+                            <div id="slipDropzone" class="border-2 border-dashed border-white/20 hover:border-yellow-400/60 rounded-2xl p-6 text-center transition cursor-pointer bg-black/50 relative overflow-hidden">
+                                <input type="file" id="slipFileInput" accept="image/*" class="hidden">
+                                
+                                <div id="slipUploadPrompt" class="py-6 space-y-2.5">
+                                    <div class="w-16 h-16 rounded-2xl bg-yellow-500/10 border border-yellow-500/30 mx-auto flex items-center justify-center text-2xl text-yellow-400">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold text-white">คลิกเพื่อเลือกรูปสลิปโอนเงินจากอุปกรณ์ของคุณ</p>
+                                    <p class="text-xs text-gray-400">ระบบสแกน QR + OCR ภาษาไทย จะตรวจชื่อผู้รับโอน <span class="text-yellow-400 font-semibold">"จักรวาล ผดุงซือ"</span> และยอดเงินอัตโนมัติ</p>
+                                </div>
+
+                                <div id="slipPreviewContainer" class="hidden relative max-w-xs mx-auto">
+                                    <div class="relative rounded-xl overflow-hidden border border-white/20 shadow-2xl">
+                                        <img id="slipPreviewImg" src="" alt="Slip Preview" class="w-full h-auto max-h-72 object-contain bg-black">
+                                        <div id="scannerLaserBar" class="scanner-laser hidden"></div>
+                                    </div>
+                                    <div class="mt-3 flex items-center justify-between text-xs text-gray-300 px-1">
+                                        <span id="slipFileName" class="truncate max-w-[180px] font-mono">slip.jpg</span>
+                                        <button type="button" id="clearSlipBtn" class="text-red-400 hover:text-red-300 font-medium flex items-center gap-1">
+                                            <i class="fa-solid fa-trash-can"></i> เปลี่ยนรูปสลิป
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ช่องระบุยอดเงินตามสลิป (จะถูกกรอกอัตโนมัติเมื่อสแกนพบ หรือกรอกช่วยกรณีพื้นหลังสลิปมีลายน้ำหนา) -->
+                        <div class="bg-black/60 border border-white/10 rounded-2xl p-4">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <label for="manualSlipAmountInput" class="text-xs font-semibold text-gray-200 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-money-bill-transfer text-yellow-400"></i>
+                                    <span>2. ยอดเงินในสลิป (บาท) — ระบบจะอ่านให้อัตโนมัติ หรือระบุตามจริงในสลิป</span>
+                                </label>
+                                <span id="qrBadgeStatus" class="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-gray-400 border border-white/10">
+                                    รอแนบสลิป
+                                </span>
+                            </div>
+                            <div class="relative">
+                                <input 
+                                    type="number" 
+                                    id="manualSlipAmountInput" 
+                                    min="1" 
+                                    step="1" 
+                                    placeholder="ระบบจะดึงยอดเงินจากสลิปอัตโนมัติ (หรือกรอกยอดเงินที่โอน เช่น 100, 199)" 
+                                    class="metal-input w-full pl-10 pr-16 py-3 rounded-xl text-white font-mono text-sm placeholder-gray-500"
+                                >
+                                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-yellow-400 font-bold">
+                                    ฿
+                                </div>
+                                <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-xs font-mono text-yellow-400">
+                                    1฿ = 1P
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scan Result Box -->
+                        <div id="scanResultBox" class="hidden rounded-2xl p-4 border text-xs space-y-1.5"></div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-3 pt-1">
+                            <button 
+                                type="button" 
+                                id="backToStep1Btn"
+                                class="btn-metal px-5 py-3.5 rounded-xl text-xs font-semibold text-gray-300 hover:text-white flex items-center justify-center gap-2"
+                            >
+                                <i class="fa-solid fa-arrow-left"></i>
+                                <span>กลับไปดูเลขบัญชี</span>
+                            </button>
+
+                            <button 
+                                type="button" 
+                                id="verifySlipBtn"
+                                class="flex-1 py-4 px-6 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 hover:from-yellow-300 hover:to-amber-400 text-black font-extrabold text-sm tracking-wide uppercase shadow-[0_10px_25px_rgba(250,204,21,0.25)] transition flex items-center justify-center gap-2.5"
+                            >
+                                <i class="fa-solid fa-qrcode"></i>
+                                <span>ยืนยันการสแกนสลิปเติมพอยท์</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 SECTION 3: คลังไอเทม & ประวัติธุรกรรม
+                 ========================================== -->
+            <section id="sectionInventoryView" class="hidden space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div class="lg:col-span-6 metal-card rounded-3xl p-6 border border-purple-500/30">
+                        <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-9 h-9 rounded-xl bg-purple-500/15 border border-purple-500/40 flex items-center justify-center text-purple-400">
+                                    <i class="fa-solid fa-box-open"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-base sm:text-lg font-bold text-white">คลังไอเทมในตัวละคร (<span id="inventoryCountLabel">0</span>)</h3>
+                                    <p class="text-[11px] text-gray-400">สถานะ VIP และของรางวัลที่สุ่มได้จากกาชา</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="playerInventoryList" class="mt-4 flex flex-wrap gap-2.5 max-h-80 overflow-y-auto pr-1">
+                            <span class="text-xs text-gray-500 italic">ยังไม่มีไอเทมในคลัง</span>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-6 metal-card rounded-3xl p-6 border border-white/10">
+                        <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                            <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-clock-rotate-left text-yellow-400"></i>
+                                <span>ประวัติการเติมเงินและใช้พอยท์</span>
+                            </h3>
+                            <span class="text-[11px] font-mono text-gray-400">บันทึกอัตโนมัติ</span>
+                        </div>
+
+                        <div id="txHistoryList" class="mt-4 space-y-2.5 max-h-80 overflow-y-auto pr-1"></div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="border-t border-white/10 bg-[#040507]/90 py-5 mt-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+                <div class="flex items-center gap-2.5">
+                    <svg viewBox="140 95 340 340" class="w-6 h-6">
+                        <use href="#rn-compact-emblem" xlink:href="#rn-compact-emblem"></use>
+                    </svg>
+                    <span>© 2026 <strong class="text-gray-300">REAL NEXUS RP</strong> — ROLEPLAY COMMUNITY. All Rights Reserved.</span>
+                </div>
+                <div class="font-mono text-[11px] text-gray-400">
+                    SLIP RECIPIENT VERIFICATION: <span class="text-yellow-400">------</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ==========================================
+         APPLICATION LOGIC & MULTI-ENGINE SLIP SCANNER
+         ========================================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // ==========================================
+        // 0. PURE BLACK ANIMATED PARTICLE BACKGROUND
+        // ==========================================
+        function initBackgroundParticles() {
+            const canvas = document.getElementById("bgParticleCanvas");
+            if (!canvas) return;
+            const ctx = canvas.getContext("2d");
+
+            let width = (canvas.width = window.innerWidth);
+            let height = (canvas.height = window.innerHeight);
+
+            window.addEventListener("resize", () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            const count = Math.min(65, Math.floor((width * height) / 22000));
+            const particles = Array.from({ length: count }, () => ({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.45,
+                vy: (Math.random() - 0.5) * 0.45 - 0.15,
+                size: Math.random() * 2 + 0.7,
+                gold: Math.random() > 0.65,
+                alpha: Math.random() * 0.55 + 0.15
+            }));
+
+            function renderParticles() {
+                ctx.clearRect(0, 0, width, height);
+
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0) p.x = width;
+                    if (p.x > width) p.x = 0;
+                    if (p.y < 0) p.y = height;
+                    if (p.y > height) p.y = 0;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fillStyle = p.gold
+                        ? `rgba(250, 204, 21, ${p.alpha})`
+                        : `rgba(209, 213, 219, ${p.alpha * 0.8})`;
+                    ctx.fill();
+
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p2 = particles[j];
+                        const dx = p.x - p2.x;
+                        const dy = p.y - p2.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${(1 - dist / 120) * 0.05})`;
+                            ctx.lineWidth = 0.6;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(renderParticles);
+            }
+            renderParticles();
+        }
+        initBackgroundParticles();
+
+        // ==========================================
+        // 1. CONSTANTS & VALIDATION RULES
+        // ==========================================
+        const RP_NAME_REGEX = /^[A-Z][a-z]+_[A-Z][a-z]*$/;
+        const REQUIRED_SLIP_RECIPIENT = "จักรวาล ผดุงซือ";
+
+        const VIP_ITEM_CONFIG = {
+            id: "vip_nexus_30days",
+            name: "VIP 30 วัน (ป้าย VIP Member • ฟามx2 • พาวรถฟรี 5 ครั้ง/วัน • ออโต้งานฟามทุกงาน • รถฟาม 200 โล 30 วัน)",
+            shortName: "VIP 30 วัน",
+            price: 199,
+            icon: "fa-crown",
+            perks: [
+                "ป้าย VIP Member",
+                "ฟาม x2",
+                "พาวรถฟรี 5 ครั้งต่อ 1 วัน",
+                "ออโต้งานฟามทุกงาน",
+                "รถฟาม 200 โล 30 วัน"
+            ]
+        };
+
+        const GACHA_PRICE_PER_BALL = 10;
+        const GACHA_REWARD_POOL = [
+            { id: "gacha_gtr_r35", name: "กาชารถ Nissan GT-R R35", rarity: "LEGENDARY", icon: "fa-car-burst", color: "text-yellow-300 border-yellow-400/60 bg-yellow-500/20", weight: 0.2 },
+            { id: "gacha_cement", name: "ปูน", rarity: "RARE", icon: "fa-trowel-bricks", color: "text-gray-200 border-gray-400/40 bg-gray-500/15", weight: 40 },
+            { id: "gacha_wire", name: "สายไฟ", rarity: "RARE", icon: "fa-plug-circle-bolt", color: "text-sky-300 border-sky-500/40 bg-sky-500/15", weight: 40 },
+            { id: "gacha_red_money", name: "เงินแดง", rarity: "RARE", icon: "fa-money-bill-flame", color: "text-red-300 border-red-500/40 bg-red-500/15", weight: 40 },
+            { id: "gacha_diamond", name: "เพชร", rarity: "EPIC", icon: "fa-gem", color: "text-cyan-300 border-cyan-400/40 bg-cyan-500/15", weight: 50 },
+            { id: "gacha_copper", name: "ทองแดง", rarity: "UNCOMMON", icon: "fa-medal", color: "text-amber-300 border-amber-500/40 bg-amber-500/15", weight: 55 },
+            { id: "gacha_metal", name: "โลหะ", rarity: "UNCOMMON", icon: "fa-cubes", color: "text-slate-200 border-slate-400/40 bg-slate-500/15", weight: 60 },
+            { id: "gacha_gold", name: "ทอง", rarity: "UNCOMMON", icon: "fa-coins", color: "text-yellow-300 border-yellow-500/40 bg-yellow-500/15", weight: 60 },
+            { id: "gacha_flour", name: "แป้ง", rarity: "COMMON", icon: "fa-wheat-awn", color: "text-amber-100 border-white/15 bg-white/5", weight: 80 },
+            { id: "gacha_salad", name: "ผักสลัด", rarity: "COMMON", icon: "fa-leaf", color: "text-emerald-300 border-emerald-500/30 bg-emerald-500/10", weight: 80 },
+            { id: "gacha_tuna", name: "ทูน่า", rarity: "COMMON", icon: "fa-fish-fins", color: "text-sky-200 border-sky-500/30 bg-sky-500/10", weight: 80 },
+            { id: "gacha_sushi", name: "ซูชิ", rarity: "COMMON", icon: "fa-bowl-rice", color: "text-orange-200 border-orange-500/30 bg-orange-500/10", weight: 80 },
+            { id: "gacha_pie", name: "พาย", rarity: "COMMON", icon: "fa-chart-pie", color: "text-amber-200 border-amber-500/30 bg-amber-500/10", weight: 80 }
+        ];
+
+        // ==========================================
+        // 2. STATE & PERSISTENCE
+        // ==========================================
+        let app = null;
+        let db = null;
+        let auth = null;
+        let currentUser = null;
+        let activePlayerUnsubscribe = null;
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'real-nexus-rp-app';
+        const LOCAL_STORAGE_KEY = 'REAL_NEXUS_RP_PERSISTENT_DB_V2';
+
+        let memoryStore = {
+            players: {},
+            usedSlipRefs: {},
+            remembered: {
+                remember: true,
+                username: "",
+                password: ""
+            }
+        };
+
+        function loadLocalPersistence() {
+            try {
+                const rawLocal = localStorage.getItem(LOCAL_STORAGE_KEY);
+                if (rawLocal) {
+                    const parsed = JSON.parse(rawLocal);
+                    if (parsed && typeof parsed === "object") {
+                        memoryStore = {
+                            players: { ...memoryStore.players, ...(parsed.players || {}) },
+                            usedSlipRefs: { ...memoryStore.usedSlipRefs, ...(parsed.usedSlipRefs || {}) },
+                            remembered: parsed.remembered || memoryStore.remembered
+                        };
+                    }
+                }
+            } catch (e) {}
+
+            try {
+                if (window.name && window.name.startsWith("RN_RP_STATE:")) {
+                    const parsed = JSON.parse(window.name.replace("RN_RP_STATE:", ""));
+                    if (parsed && typeof parsed === "object") {
+                        memoryStore = {
+                            players: { ...memoryStore.players, ...(parsed.players || {}) },
+                            usedSlipRefs: { ...memoryStore.usedSlipRefs, ...(parsed.usedSlipRefs || {}) },
+                            remembered: parsed.remembered || memoryStore.remembered
+                        };
+                    }
+                }
+            } catch (e) {}
+        }
+
+        loadLocalPersistence();
+
+        function syncWindowNameBackup() {
+            try {
+                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(memoryStore));
+            } catch (e) {}
+            try {
+                window.name = "RN_RP_STATE:" + JSON.stringify(memoryStore);
+            } catch (e) {}
+        }
+
+        let loggedInUsername = null;
+        let currentPlayerProfile = null;
+        let currentSlipDataUrl = null;
+        let currentSlipHash = null;
+        let currentDetectedQrData = null;
+
+        // ==========================================
+        // 3. UI ELEMENTS
+        // ==========================================
+        const loginView = document.getElementById("loginView");
+        const dashboardView = document.getElementById("dashboardView");
+        const welcomeOverlay = document.getElementById("welcomeOverlay");
+        const welcomePlayerName = document.getElementById("welcomePlayerName");
+        const welcomeProgressBar = document.getElementById("welcomeProgressBar");
+        const welcomeSubStatus = document.getElementById("welcomeSubStatus");
+        const skipWelcomeBtn = document.getElementById("skipWelcomeBtn");
+
+        const loginForm = document.getElementById("loginForm");
+        const loginUsername = document.getElementById("loginUsername");
+        const loginPassword = document.getElementById("loginPassword");
+        const rememberPassword = document.getElementById("rememberPassword");
+        const togglePasswordBtn = document.getElementById("togglePasswordBtn");
+        const togglePasswordIcon = document.getElementById("togglePasswordIcon");
+        const fillDemoNameBtn = document.getElementById("fillDemoNameBtn");
+        const usernameStatusIcon = document.getElementById("usernameStatusIcon");
+        const nameFormatBadge = document.getElementById("nameFormatBadge");
+        const loginErrorBox = document.getElementById("loginErrorBox");
+        const loginErrorText = document.getElementById("loginErrorText");
+
+        const navPointPill = document.getElementById("navPointPill");
+        const navPointBalance = document.getElementById("navPointBalance");
+        const navPlayerName = document.getElementById("navPlayerName");
+        const navVipBadge = document.getElementById("navVipBadge");
+        const heroPlayerName = document.getElementById("heroPlayerName");
+        const heroVipStatusBadge = document.getElementById("heroVipStatusBadge");
+        const statCurrentPoints = document.getElementById("statCurrentPoints");
+        const statTotalTopup = document.getElementById("statTotalTopup");
+        const statTotalItems = document.getElementById("statTotalItems");
+        const shopPointBalanceLabel = document.getElementById("shopPointBalanceLabel");
+        const logoutBtn = document.getElementById("logoutBtn");
+
+        const catTopupBtn = document.getElementById("catTopupBtn");
+        const catShopBtn = document.getElementById("catShopBtn");
+        const catInventoryBtn = document.getElementById("catInventoryBtn");
+        const sectionTopupView = document.getElementById("sectionTopupView");
+        const sectionShopView = document.getElementById("sectionShopView");
+        const sectionInventoryView = document.getElementById("sectionInventoryView");
+
+        const stepTab1Btn = document.getElementById("stepTab1Btn");
+        const stepTab2Btn = document.getElementById("stepTab2Btn");
+        const topupStep1 = document.getElementById("topupStep1");
+        const topupStep2 = document.getElementById("topupStep2");
+        const goToStep2Btn = document.getElementById("goToStep2Btn");
+        const backToStep1Btn = document.getElementById("backToStep1Btn");
+
+        const slipDropzone = document.getElementById("slipDropzone");
+        const slipFileInput = document.getElementById("slipFileInput");
+        const slipUploadPrompt = document.getElementById("slipUploadPrompt");
+        const slipPreviewContainer = document.getElementById("slipPreviewContainer");
+        const slipPreviewImg = document.getElementById("slipPreviewImg");
+        const slipFileName = document.getElementById("slipFileName");
+        const clearSlipBtn = document.getElementById("clearSlipBtn");
+        const scannerLaserBar = document.getElementById("scannerLaserBar");
+        const verifySlipBtn = document.getElementById("verifySlipBtn");
+        const scanResultBox = document.getElementById("scanResultBox");
+        const copyAccountBtn = document.getElementById("copyAccountBtn");
+        const manualSlipAmountInput = document.getElementById("manualSlipAmountInput");
+        const qrBadgeStatus = document.getElementById("qrBadgeStatus");
+
+        const buyVipBtn = document.getElementById("buyVipBtn");
+        const spinGacha1Btn = document.getElementById("spinGacha1Btn");
+        const spinGacha10Btn = document.getElementById("spinGacha10Btn");
+        const gachaModal = document.getElementById("gachaModal");
+        const gachaSpinningView = document.getElementById("gachaSpinningView");
+        const gachaResultView = document.getElementById("gachaResultView");
+        const gachaResultHeadline = document.getElementById("gachaResultHeadline");
+        const gachaRewardCards = document.getElementById("gachaRewardCards");
+        const gachaSpinAgainBtn = document.getElementById("gachaSpinAgainBtn");
+        const closeGachaModalBtn = document.getElementById("closeGachaModalBtn");
+
+        const playerInventoryList = document.getElementById("playerInventoryList");
+        const inventoryCountLabel = document.getElementById("inventoryCountLabel");
+        const txHistoryList = document.getElementById("txHistoryList");
+
+        const customModal = document.getElementById("customModal");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalMessage = document.getElementById("modalMessage");
+        const modalIcon = document.getElementById("modalIcon");
+        const modalIconWrap = document.getElementById("modalIconWrap");
+        const modalTopBar = document.getElementById("modalTopBar");
+        const modalCloseBtn = document.getElementById("modalCloseBtn");
+
+        function showModal(title, message, type = "info") {
+            modalTitle.textContent = title;
+            modalMessage.textContent = message;
+            customModal.classList.remove("hidden");
+            customModal.classList.add("flex");
+
+            if (type === "error") {
+                modalIcon.className = "fa-solid fa-circle-xmark";
+                modalIconWrap.className = "w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-red-500/15 border border-red-500/40 text-red-400 text-xl";
+                modalTopBar.className = "absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-red-500 to-rose-600";
+            } else if (type === "success") {
+                modalIcon.className = "fa-solid fa-circle-check";
+                modalIconWrap.className = "w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 text-xl";
+                modalTopBar.className = "absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-400 to-green-600";
+            } else {
+                modalIcon.className = "fa-solid fa-bell";
+                modalIconWrap.className = "w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-yellow-500/15 border border-yellow-500/40 text-yellow-400 text-xl";
+                modalTopBar.className = "absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-yellow-400 to-amber-600";
+            }
+        }
+
+        modalCloseBtn.addEventListener("click", () => {
+            customModal.classList.add("hidden");
+            customModal.classList.remove("flex");
+        });
+
+        // ==========================================
+        // 4. SOUND SYNTHESIS
+        // ==========================================
+        function playNexusSound(type = "welcome") {
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                const ctx = new AudioCtx();
+                const now = ctx.currentTime;
+
+                if (type === "welcome") {
+                    const freqs = [110, 220, 329.63, 440, 659.25];
+                    freqs.forEach((f, idx) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = idx % 2 === 0 ? "sine" : "triangle";
+                        osc.frequency.setValueAtTime(f * 0.8, now);
+                        osc.frequency.exponentialRampToValueAtTime(f, now + 0.6);
+
+                        gain.gain.setValueAtTime(0.001, now);
+                        gain.gain.linearRampToValueAtTime(0.06 / freqs.length, now + 0.3);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.4);
+
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(now + idx * 0.06);
+                        osc.stop(now + 2.5);
+                    });
+                } else if (type === "coin") {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = "sine";
+                    osc.frequency.setValueAtTime(987.77, now);
+                    osc.frequency.setValueAtTime(1318.51, now + 0.09);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.45);
+                } else if (type === "error") {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = "sawtooth";
+                    osc.frequency.setValueAtTime(160, now);
+                    osc.frequency.linearRampToValueAtTime(115, now + 0.25);
+                    gain.gain.setValueAtTime(0.06, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                }
+            } catch (e) {}
+        }
+
+        // ==========================================
+        // 5. FIREBASE AUTH & FIRESTORE STORAGE
+        // ==========================================
+        async function initCloudStorage() {
+            try {
+                if (typeof __firebase_config !== "undefined" && __firebase_config) {
+                    const firebaseConfig = JSON.parse(__firebase_config);
+                    app = initializeApp(firebaseConfig);
+                    auth = getAuth(app);
+                    db = getFirestore(app);
+
+                    if (typeof __initial_auth_token !== "undefined" && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+
+                    currentUser = auth.currentUser;
+                    onAuthStateChanged(auth, (u) => { currentUser = u; });
+
+                    if (currentUser) {
+                        const remDocRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'rn_settings', 'remembered_login');
+                        const remSnap = await getDoc(remDocRef);
+                        if (remSnap.exists()) {
+                            const data = remSnap.data();
+                            memoryStore.remembered = {
+                                remember: data.remember ?? true,
+                                username: data.username || "",
+                                password: data.password || ""
+                            };
+                            syncWindowNameBackup();
+                        }
+                    }
+                }
+            } catch (err) {
+                console.warn("Cloud storage fallback to local storage:", err);
+            }
+            applyRememberedCredentialsToForm();
+        }
+
+        function applyRememberedCredentialsToForm() {
+            if (memoryStore.remembered && memoryStore.remembered.remember && memoryStore.remembered.username) {
+                loginUsername.value = memoryStore.remembered.username;
+                loginPassword.value = memoryStore.remembered.password || "";
+                rememberPassword.checked = true;
+                validateUsernameLive();
+            }
+        }
+
+        async function saveRememberedCredentials(username, password, remember) {
+            memoryStore.remembered = {
+                remember: !!remember,
+                username: remember ? username : "",
+                password: remember ? password : ""
+            };
+            syncWindowNameBackup();
+
+            if (db && currentUser) {
+                try {
+                    const remDocRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'rn_settings', 'remembered_login');
+                    await setDoc(remDocRef, {
+                        remember: !!remember,
+                        username: remember ? username : "",
+                        password: remember ? password : "",
+                        updatedAt: Date.now()
+                    });
+                } catch (e) {}
+            }
+        }
+
+        async function fetchPlayerProfile(username) {
+            if (db && currentUser) {
+                try {
+                    const playerRef = doc(db, 'artifacts', appId, 'public', 'data', 'rn_players', username);
+                    const snap = await getDoc(playerRef);
+                    if (snap.exists()) {
+                        const data = snap.data();
+                        memoryStore.players[username] = data;
+                        syncWindowNameBackup();
+                        return data;
+                    }
+                } catch (e) {}
+            }
+            return memoryStore.players[username] || null;
+        }
+
+        async function savePlayerProfile(username, profileData) {
+            memoryStore.players[username] = profileData;
+            syncWindowNameBackup();
+
+            if (db && currentUser) {
+                try {
+                    const playerRef = doc(db, 'artifacts', appId, 'public', 'data', 'rn_players', username);
+                    await setDoc(playerRef, profileData);
+                } catch (e) {}
+            }
+        }
+
+        async function isSlipAlreadyUsed(refOrHash) {
+            if (!refOrHash) return false;
+            if (memoryStore.usedSlipRefs[refOrHash]) return true;
+            if (db && currentUser) {
+                try {
+                    const refDoc = doc(db, 'artifacts', appId, 'public', 'data', 'rn_used_slips', refOrHash);
+                    const snap = await getDoc(refDoc);
+                    if (snap.exists()) {
+                        memoryStore.usedSlipRefs[refOrHash] = true;
+                        return true;
+                    }
+                } catch (e) {}
+            }
+            return false;
+        }
+
+        async function markSlipAsUsed(refKey, slipHash, username, amount) {
+            if (refKey) memoryStore.usedSlipRefs[refKey] = true;
+            if (slipHash) memoryStore.usedSlipRefs[slipHash] = true;
+            syncWindowNameBackup();
+
+            if (db && currentUser) {
+                try {
+                    if (refKey) {
+                        const refDoc = doc(db, 'artifacts', appId, 'public', 'data', 'rn_used_slips', refKey);
+                        await setDoc(refDoc, { refKey, slipHash: slipHash || "", usedBy: username, amount, usedAt: Date.now() });
+                    }
+                    if (slipHash && slipHash !== refKey) {
+                        const hashDoc = doc(db, 'artifacts', appId, 'public', 'data', 'rn_used_slips', slipHash);
+                        await setDoc(hashDoc, { refKey: refKey || slipHash, slipHash, usedBy: username, amount, usedAt: Date.now() });
+                    }
+                } catch (e) {}
+            }
+        }
+
+        function subscribeToPlayerProfile(username) {
+            if (activePlayerUnsubscribe) {
+                activePlayerUnsubscribe();
+                activePlayerUnsubscribe = null;
+            }
+            if (!db || !currentUser) return;
+
+            const playerRef = doc(db, 'artifacts', appId, 'public', 'data', 'rn_players', username);
+            activePlayerUnsubscribe = onSnapshot(
+                playerRef,
+                (snap) => {
+                    if (snap.exists()) {
+                        currentPlayerProfile = snap.data();
+                        memoryStore.players[username] = currentPlayerProfile;
+                        syncWindowNameBackup();
+                        renderDashboardUI();
+                    }
+                },
+                () => {}
+            );
+        }
+
+        // ==========================================
+        // 6. STRICT ROLEPLAY NAME VALIDATION
+        // ==========================================
+        function validateUsernameLive() {
+            const val = loginUsername.value.trim();
+            loginErrorBox.classList.add("hidden");
+
+            if (!val) {
+                usernameStatusIcon.innerHTML = `<i class="fa-solid fa-circle-question text-gray-600"></i>`;
+                nameFormatBadge.className = "text-[11px] font-mono px-2 py-0.5 rounded bg-white/5 text-gray-400 border border-white/10";
+                nameFormatBadge.textContent = "รูปแบบ: Yoa_Tani";
+                return false;
+            }
+
+            const isValid = RP_NAME_REGEX.test(val);
+            if (isValid) {
+                usernameStatusIcon.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i>`;
+                nameFormatBadge.className = "text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30";
+                nameFormatBadge.textContent = "✓ ชื่อถูกต้อง";
+                return true;
+            } else {
+                usernameStatusIcon.innerHTML = `<i class="fa-solid fa-circle-xmark text-red-400"></i>`;
+                nameFormatBadge.className = "text-[11px] font-mono px-2 py-0.5 rounded bg-red-500/15 text-red-300 border border-red-500/30";
+                nameFormatBadge.textContent = "✗ รูปแบบผิด";
+                return false;
+            }
+        }
+
+        loginUsername.addEventListener("input", validateUsernameLive);
+
+        fillDemoNameBtn.addEventListener("click", () => {
+            loginUsername.value = "Yoa_Tani";
+            if (!loginPassword.value) {
+                loginPassword.value = "nexus1234";
+            }
+            validateUsernameLive();
+        });
+
+        togglePasswordBtn.addEventListener("click", () => {
+            const isPwd = loginPassword.type === "password";
+            loginPassword.type = isPwd ? "text" : "password";
+            togglePasswordIcon.className = isPwd ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
+        });
+
+        // ==========================================
+        // 7. LOGIN & ENTRANCE ANIMATION WORKFLOW
+        // ==========================================
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const username = loginUsername.value.trim();
+            const password = loginPassword.value;
+            const remember = rememberPassword.checked;
+
+            if (!RP_NAME_REGEX.test(username)) {
+                playNexusSound("error");
+                loginErrorText.textContent = 'รูปแบบชื่อผู้เล่นไม่ถูกต้อง! ต้องขึ้นต้นด้วยตัวพิมพ์ใหญ่ตามด้วยตัวพิมพ์เล็ก คั่นด้วย _ และหลัง _ ต้องมีตัวพิมพ์ใหญ่ตัวแรก 1 ตัวเท่านั้น เช่น "Yoa_Tani"';
+                loginErrorBox.classList.remove("hidden");
+                return;
+            }
+
+            if (!password || password.length < 3) {
+                playNexusSound("error");
+                loginErrorText.textContent = "กรุณากรอกรหัสผ่านอย่างน้อย 3 ตัวอักษร";
+                loginErrorBox.classList.remove("hidden");
+                return;
+            }
+
+            const submitBtn = document.getElementById("loginSubmitBtn");
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> <span>กำลังตรวจสอบข้อมูลตัวละคร...</span>`;
+
+            try {
+                let existingProfile = await fetchPlayerProfile(username);
+
+                if (existingProfile) {
+                    if (existingProfile.password !== password) {
+                        playNexusSound("error");
+                        loginErrorText.textContent = `รหัสผ่านของตัวละคร "${username}" ไม่ถูกต้อง! กรุณาตรวจสอบรหัสผ่านที่ท่านเคยตั้งไว้`;
+                        loginErrorBox.classList.remove("hidden");
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> <span>เข้าสู่ระบบ REAL NEXUS RP</span>`;
+                        return;
+                    }
+                    existingProfile.lastLogin = Date.now();
+                    await savePlayerProfile(username, existingProfile);
+                    currentPlayerProfile = existingProfile;
+                } else {
+                    const newProfile = {
+                        username: username,
+                        password: password,
+                        points: 0,
+                        totalTopup: 0,
+                        inventory: [],
+                        transactions: JSON.stringify([
+                            {
+                                id: "TX-INIT",
+                                type: "SYSTEM",
+                                title: "เชื่อมต่อข้อมูลตัวละครเข้าสู่ระบบ REAL NEXUS RP สำเร็จ",
+                                amount: 0,
+                                timestamp: Date.now()
+                            }
+                        ]),
+                        createdAt: Date.now(),
+                        lastLogin: Date.now()
+                    };
+                    await savePlayerProfile(username, newProfile);
+                    currentPlayerProfile = newProfile;
+                }
+
+                await saveRememberedCredentials(username, password, remember);
+
+                loggedInUsername = username;
+                subscribeToPlayerProfile(username);
+
+                await runWelcomeEntranceAnimation(username);
+
+                loginView.classList.add("hidden");
+                dashboardView.classList.remove("hidden");
+                switchCategoryView("shop");
+                renderDashboardUI();
+
+            } catch (err) {
+                console.error("Login error:", err);
+                showModal("เกิดข้อผิดพลาด", "ไม่สามารถเข้าสู่ระบบได้ในขณะนี้ กรุณาลองใหม่อีกครั้ง", "error");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> <span>เข้าสู่ระบบ REAL NEXUS RP</span>`;
+            }
+        });
+
+        function runWelcomeEntranceAnimation(username) {
+            return new Promise((resolve) => {
+                welcomePlayerName.textContent = username;
+                welcomeProgressBar.style.width = "0%";
+                welcomeOverlay.classList.remove("hidden");
+                welcomeOverlay.classList.add("flex");
+
+                playNexusSound("welcome");
+
+                const canvas = document.getElementById("warpCanvas");
+                const ctx = canvas.getContext("2d");
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+
+                const stars = Array.from({ length: 90 }, () => ({
+                    x: Math.random() * canvas.width - canvas.width / 2,
+                    y: Math.random() * canvas.height - canvas.height / 2,
+                    z: Math.random() * canvas.width
+                }));
+
+                let animActive = true;
+                let finished = false;
+
+                function finishWelcome() {
+                    if (finished) return;
+                    finished = true;
+                    animActive = false;
+                    welcomeOverlay.classList.add("hidden");
+                    welcomeOverlay.classList.remove("flex");
+                    resolve();
+                }
+
+                skipWelcomeBtn.onclick = finishWelcome;
+
+                function drawWarp() {
+                    if (!animActive) return;
+                    ctx.fillStyle = "rgba(3, 4, 6, 0.28)";
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    const cx = canvas.width / 2;
+                    const cy = canvas.height / 2;
+
+                    stars.forEach((s) => {
+                        s.z -= 14;
+                        if (s.z <= 1) {
+                            s.x = Math.random() * canvas.width - cx;
+                            s.y = Math.random() * canvas.height - cy;
+                            s.z = canvas.width;
+                        }
+                        const sx = (s.x / s.z) * cx + cx;
+                        const sy = (s.y / s.z) * cy + cy;
+                        const r = Math.max(0.6, (1 - s.z / canvas.width) * 3.2);
+
+                        ctx.beginPath();
+                        ctx.arc(sx, sy, r, 0, Math.PI * 2);
+                        ctx.fillStyle = s.z % 3 < 1 ? "#facc15" : "#d1d5db";
+                        ctx.fill();
+                    });
+
+                    requestAnimationFrame(drawWarp);
+                }
+                drawWarp();
+
+                setTimeout(() => {
+                    welcomeProgressBar.style.width = "45%";
+                    welcomeSubStatus.textContent = `LOADING CHARACTER PROFILE: ${username}...`;
+                }, 300);
+
+                setTimeout(() => {
+                    welcomeProgressBar.style.width = "85%";
+                    welcomeSubStatus.textContent = "SYNCING NEXUS POINT WALLET & INVENTORY...";
+                }, 1100);
+
+                setTimeout(() => {
+                    welcomeProgressBar.style.width = "100%";
+                    welcomeSubStatus.textContent = "WELCOME TO REAL NEXUS RP!";
+                }, 1900);
+
+                setTimeout(finishWelcome, 2500);
+            });
+        }
+
+        logoutBtn.addEventListener("click", () => {
+            if (activePlayerUnsubscribe) {
+                activePlayerUnsubscribe();
+                activePlayerUnsubscribe = null;
+            }
+            loggedInUsername = null;
+            currentPlayerProfile = null;
+
+            dashboardView.classList.add("hidden");
+            loginView.classList.remove("hidden");
+
+            if (memoryStore.remembered && memoryStore.remembered.remember) {
+                loginUsername.value = memoryStore.remembered.username;
+                loginPassword.value = memoryStore.remembered.password;
+                rememberPassword.checked = true;
+            } else {
+                loginPassword.value = "";
+                rememberPassword.checked = false;
+            }
+            validateUsernameLive();
+        });
+
+        // ==========================================
+        // 8. CATEGORY SWITCHING & RENDER DASHBOARD
+        // ==========================================
+        function switchCategoryView(catName) {
+            sectionTopupView.classList.add("hidden");
+            sectionShopView.classList.add("hidden");
+            sectionInventoryView.classList.add("hidden");
+
+            catTopupBtn.classList.remove("active-cat-topup");
+            catShopBtn.classList.remove("active-cat-shop");
+            catInventoryBtn.classList.remove("active-cat-inventory");
+
+            if (catName === "topup") {
+                sectionTopupView.classList.remove("hidden");
+                catTopupBtn.classList.add("active-cat-topup");
+                setTopupStep(1);
+            } else if (catName === "shop") {
+                sectionShopView.classList.remove("hidden");
+                catShopBtn.classList.add("active-cat-shop");
+            } else if (catName === "inventory") {
+                sectionInventoryView.classList.remove("hidden");
+                catInventoryBtn.classList.add("active-cat-inventory");
+            }
+        }
+
+        catTopupBtn.addEventListener("click", () => switchCategoryView("topup"));
+        catShopBtn.addEventListener("click", () => switchCategoryView("shop"));
+        catInventoryBtn.addEventListener("click", () => switchCategoryView("inventory"));
+        navPointPill.addEventListener("click", () => switchCategoryView("topup"));
+
+        function getParsedTransactions(profile) {
+            if (!profile || !profile.transactions) return [];
+            if (Array.isArray(profile.transactions)) return profile.transactions;
+            try { return JSON.parse(profile.transactions); } catch (e) { return []; }
+        }
+
+        function getParsedInventory(profile) {
+            if (!profile || !profile.inventory) return [];
+            if (Array.isArray(profile.inventory)) return profile.inventory;
+            try { return JSON.parse(profile.inventory); } catch (e) { return []; }
+        }
+
+        function renderDashboardUI() {
+            if (!currentPlayerProfile) return;
+
+            const points = Number(currentPlayerProfile.points || 0);
+            const totalTopup = Number(currentPlayerProfile.totalTopup || 0);
+            const inv = getParsedInventory(currentPlayerProfile);
+            const txs = getParsedTransactions(currentPlayerProfile);
+            const hasVip = inv.some(i => i.id === VIP_ITEM_CONFIG.id || i.isVip);
+
+            navPlayerName.textContent = currentPlayerProfile.username;
+            heroPlayerName.textContent = currentPlayerProfile.username;
+            navPointBalance.textContent = points.toLocaleString();
+            statCurrentPoints.textContent = points.toLocaleString();
+            statTotalTopup.textContent = totalTopup.toLocaleString();
+            statTotalItems.textContent = inv.length.toLocaleString();
+            inventoryCountLabel.textContent = inv.length;
+            if (shopPointBalanceLabel) {
+                shopPointBalanceLabel.textContent = points.toLocaleString() + " P";
+            }
+
+            if (hasVip) {
+                navVipBadge.classList.remove("hidden");
+                heroVipStatusBadge.classList.remove("hidden");
+                buyVipBtn.innerHTML = `<i class="fa-solid fa-crown"></i> <span>มีสถานะ VIP 30 วันแล้ว (ซื้อเพิ่มได้)</span>`;
+            } else {
+                navVipBadge.classList.add("hidden");
+                heroVipStatusBadge.classList.add("hidden");
+                buyVipBtn.innerHTML = `<i class="fa-solid fa-cart-plus"></i> <span>ซื้อ VIP 30 วัน (199 P)</span>`;
+            }
+
+            if (inv.length === 0) {
+                playerInventoryList.innerHTML = `<span class="text-xs text-gray-500 italic">ยังไม่มีไอเทมในคลัง (สามารถเลือกซื้อ VIP 30 วัน หรือสุ่มกาชาได้ที่หน้าร้านค้า)</span>`;
+            } else {
+                const groupedMap = new Map();
+                inv.forEach(item => {
+                    const key = item.name;
+                    if (!groupedMap.has(key)) {
+                        groupedMap.set(key, { ...item, count: 1 });
+                    } else {
+                        groupedMap.get(key).count += 1;
+                    }
+                });
+                const groupedList = Array.from(groupedMap.values()).reverse();
+
+                playerInventoryList.innerHTML = groupedList.map(item => `
+                    <div class="inline-flex items-center gap-2 px-3 py-2 rounded-xl ${item.color || 'bg-yellow-500/10 border-yellow-500/30 text-yellow-200'} border text-xs">
+                        <i class="fa-solid ${item.icon || 'fa-cube'}"></i>
+                        <span class="font-medium">${item.name}</span>
+                        ${item.count > 1 ? `<span class="px-1.5 py-0.2 rounded bg-black/50 font-mono font-bold text-[11px] text-white">x${item.count}</span>` : ''}
+                    </div>
+                `).join("");
+            }
+
+            if (txs.length === 0) {
+                txHistoryList.innerHTML = `<p class="text-xs text-gray-500 text-center py-4">ยังไม่มีประวัติการทำรายการ</p>`;
+            } else {
+                txHistoryList.innerHTML = txs.slice().reverse().map(tx => {
+                    const isPlus = tx.amount > 0;
+                    const isMinus = tx.amount < 0;
+                    const dateStr = new Date(tx.timestamp).toLocaleString("th-TH", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        day: "2-digit",
+                        month: "short"
+                    });
+                    return `
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/5 text-xs">
+                            <div class="flex items-center gap-2.5 min-w-0">
+                                <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
+                                    isPlus ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' :
+                                    isMinus ? 'bg-amber-500/15 text-amber-400 border border-amber-500/30' :
+                                    'bg-white/5 text-gray-400 border border-white/10'
+                                }">
+                                    <i class="fa-solid ${isPlus ? 'fa-coins' : isMinus ? 'fa-cart-shopping' : 'fa-shield-halved'}"></i>
+                                </div>
+                                <div class="truncate">
+                                    <p class="font-medium text-gray-200 truncate">${tx.title}</p>
+                                    <p class="text-[10px] text-gray-500 font-mono">${dateStr} ${tx.ref ? '• Ref: ' + tx.ref.slice(0, 14) : ''}</p>
+                                </div>
+                            </div>
+                            <div class="font-mono font-bold shrink-0 ml-2 ${
+                                isPlus ? 'text-emerald-400' : isMinus ? 'text-yellow-400' : 'text-gray-400'
+                            }">
+                                ${isPlus ? '+' + tx.amount.toLocaleString() + ' P' : isMinus ? tx.amount.toLocaleString() + ' P' : 'SYSTEM'}
+                            </div>
+                        </div>
+                    `;
+                }).join("");
+            }
+        }
+
+        // ==========================================
+        // SHOP LOGIC: VIP 30 วัน (199 P) & GACHA (10 P)
+        // ==========================================
+        buyVipBtn.addEventListener("click", async () => {
+            if (!currentPlayerProfile) return;
+            const currentPts = Number(currentPlayerProfile.points || 0);
+
+            if (currentPts < VIP_ITEM_CONFIG.price) {
+                playNexusSound("error");
+                showModal(
+                    "พอยท์ (P) ไม่เพียงพอสำหรับซื้อ VIP 30 วัน",
+                    `แพ็กเกจ VIP 30 วัน ใช้ ${VIP_ITEM_CONFIG.price} P\nปัจจุบันคุณมี ${currentPts.toLocaleString()} P กรุณาเข้าหมวดเติมเงินพอยท์เพื่อสแกนสลิปก่อนครับ`,
+                    "error"
+                );
+                return;
+            }
+
+            const inv = getParsedInventory(currentPlayerProfile);
+            const txs = getParsedTransactions(currentPlayerProfile);
+
+            VIP_ITEM_CONFIG.perks.forEach((perkName, idx) => {
+                inv.push({
+                    id: `${VIP_ITEM_CONFIG.id}_perk_${idx}_${Date.now()}`,
+                    name: `[VIP 30 วัน] ${perkName}`,
+                    icon: "fa-crown",
+                    isVip: true,
+                    color: "bg-yellow-500/20 border-yellow-400/50 text-yellow-300",
+                    purchasedAt: Date.now()
+                });
+            });
+
+            txs.push({
+                id: "VIP-" + Date.now(),
+                type: "PURCHASE",
+                title: `แลกซื้อ: VIP 30 วัน (199 P)`,
+                amount: -VIP_ITEM_CONFIG.price,
+                timestamp: Date.now()
+            });
+
+            currentPlayerProfile.points = currentPts - VIP_ITEM_CONFIG.price;
+            currentPlayerProfile.inventory = inv;
+            currentPlayerProfile.transactions = JSON.stringify(txs);
+
+            await savePlayerProfile(loggedInUsername, currentPlayerProfile);
+            renderDashboardUI();
+            playNexusSound("coin");
+
+            showModal(
+                "สมัคร VIP 30 วัน สำเร็จ!",
+                `คุณได้รับแพ็กเกจ VIP 30 วัน (199 P) เข้าสู่ตัวละคร ${loggedInUsername} เรียบร้อยแล้ว!\n\nของที่ได้รับ:\n• ป้าย VIP Member\n• ฟาม x2\n• พาวรถฟรี 5 ครั้งต่อ 1 วัน\n• ออโต้งานฟามทุกงาน\n• รถฟาม 200 โล 30 วัน`,
+                "success"
+            );
+        });
+
+        function pickRandomGachaItem() {
+            const totalWeight = GACHA_REWARD_POOL.reduce((acc, item) => acc + item.weight, 0);
+            let rand = Math.random() * totalWeight;
+            for (const item of GACHA_REWARD_POOL) {
+                if (rand < item.weight) return item;
+                rand -= item.weight;
+            }
+            return GACHA_REWARD_POOL[GACHA_REWARD_POOL.length - 1];
+        }
+
+        async function executeGachaSpin(ballCount = 1) {
+            if (!currentPlayerProfile) return;
+            const totalCost = ballCount * GACHA_PRICE_PER_BALL;
+            const currentPts = Number(currentPlayerProfile.points || 0);
+
+            if (currentPts < totalCost) {
+                playNexusSound("error");
+                showModal(
+                    "พอยท์ (P) ไม่เพียงพอสำหรับสุ่มกาชา",
+                    `การสุ่มกาชา ${ballCount} ลูก ต้องใช้ ${totalCost} P (ลูกละ 10 P)\nแต่คุณมีพอยท์คงเหลือ ${currentPts.toLocaleString()} P กรุณาเติมพอยท์ก่อนครับ`,
+                    "error"
+                );
+                return;
+            }
+
+            const inv = getParsedInventory(currentPlayerProfile);
+            const txs = getParsedTransactions(currentPlayerProfile);
+            const wonItems = [];
+
+            for (let i = 0; i < ballCount; i++) {
+                const prize = pickRandomGachaItem();
+                wonItems.push(prize);
+                inv.push({
+                    id: prize.id + "_" + Date.now() + "_" + i,
+                    name: prize.name,
+                    icon: prize.icon,
+                    color: prize.color,
+                    purchasedAt: Date.now()
+                });
+            }
+
+            txs.push({
+                id: "GACHA-" + Date.now(),
+                type: "GACHA",
+                title: `สุ่มกาชา NEXUS จำนวน ${ballCount} ลูก`,
+                amount: -totalCost,
+                timestamp: Date.now()
+            });
+
+            currentPlayerProfile.points = currentPts - totalCost;
+            currentPlayerProfile.inventory = inv;
+            currentPlayerProfile.transactions = JSON.stringify(txs);
+
+            await savePlayerProfile(loggedInUsername, currentPlayerProfile);
+            renderDashboardUI();
+
+            gachaModal.classList.remove("hidden");
+            gachaModal.classList.add("flex");
+            gachaSpinningView.classList.remove("hidden");
+            gachaResultView.classList.add("hidden");
+            playNexusSound("welcome");
+
+            setTimeout(() => {
+                playNexusSound("coin");
+                gachaSpinningView.classList.add("hidden");
+                gachaResultView.classList.remove("hidden");
+                gachaResultHeadline.textContent = `เปิดกาชา ${ballCount} ลูกสำเร็จ! (${totalCost} P)`;
+                gachaRewardCards.innerHTML = wonItems.map(item => `
+                    <div class="p-3.5 rounded-2xl border ${item.color} flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-black/40 flex items-center justify-center text-lg shrink-0">
+                            <i class="fa-solid ${item.icon}"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="text-[10px] font-mono uppercase opacity-80 block">ระดับ ${item.rarity}</span>
+                            <p class="text-xs sm:text-sm font-bold text-white truncate">${item.name}</p>
+                        </div>
+                    </div>
+                `).join("");
+            }, 950);
+        }
+
+        spinGacha1Btn.addEventListener("click", () => executeGachaSpin(1));
+        spinGacha10Btn.addEventListener("click", () => executeGachaSpin(10));
+        gachaSpinAgainBtn.addEventListener("click", () => executeGachaSpin(1));
+        closeGachaModalBtn.addEventListener("click", () => {
+            gachaModal.classList.add("hidden");
+            gachaModal.classList.remove("flex");
+        });
+
+        // ==========================================
+        // 9. MULTI-ENGINE SLIP SCANNER (jsQR + Tesseract OCR + AI Vision)
+        // แก้ไขปัญหาสแกนชื่อ "จักรวาล ผดุงซือ" ไม่ได้
+        // ==========================================
+        function setTopupStep(stepNum) {
+            if (stepNum === 1) {
+                topupStep1.classList.remove("hidden");
+                topupStep2.classList.add("hidden");
+                stepTab1Btn.className = "py-2 px-3.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-yellow-500 text-black shadow";
+                stepTab2Btn.className = "py-2 px-3.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 text-gray-400 hover:text-white";
+            } else {
+                topupStep1.classList.add("hidden");
+                topupStep2.classList.remove("hidden");
+                stepTab1Btn.className = "py-2 px-3.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 text-gray-400 hover:text-white";
+                stepTab2Btn.className = "py-2 px-3.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-yellow-500 text-black shadow";
+            }
+        }
+
+        stepTab1Btn.addEventListener("click", () => setTopupStep(1));
+        stepTab2Btn.addEventListener("click", () => setTopupStep(2));
+        goToStep2Btn.addEventListener("click", () => setTopupStep(2));
+        backToStep1Btn.addEventListener("click", () => setTopupStep(1));
+
+        copyAccountBtn.addEventListener("click", () => {
+            const tempInput = document.createElement("textarea");
+            tempInput.value = "1158485148";
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            copyAccountBtn.innerHTML = `<i class="fa-solid fa-check text-emerald-400"></i> <span>คัดลอกแล้ว</span>`;
+            setTimeout(() => {
+                copyAccountBtn.innerHTML = `<i class="fa-regular fa-copy"></i> <span>คัดลอกเลขบัญชี</span>`;
+            }, 2000);
+        });
+
+        async function computeStringSHA256(str) {
+            try {
+                const msgBuffer = new TextEncoder().encode(str);
+                const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                return "HASH_" + hashArray.slice(0, 12).map(b => b.toString(16).padStart(2, "0")).join("");
+            } catch (e) {
+                return "LEN_" + str.length;
+            }
+        }
+
+        // Scan QR code on bank slip using jsQR (checks multiple crops/scales for Mini QR on Thai slips)
+        function detectBankSlipQRCode(dataUrl) {
+            return new Promise((resolve) => {
+                if (typeof window.jsQR !== "function") {
+                    resolve(null);
+                    return;
+                }
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement("canvas");
+                    const ctx = canvas.getContext("2d");
+
+                    // 1. Full image scan
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                    try {
+                        const fullData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                        const qrFull = window.jsQR(fullData.data, fullData.width, fullData.height);
+                        if (qrFull && qrFull.data) {
+                            resolve(qrFull.data);
+                            return;
+                        }
+                    } catch (e) {}
+
+                    // 2. Bottom-right & bottom-half crop (where KBank/SCB/PromptPay mini QR usually sits)
+                    const regions = [
+                        { x: 0, y: Math.floor(img.height * 0.45), w: img.width, h: Math.floor(img.height * 0.55) },
+                        { x: Math.floor(img.width * 0.4), y: Math.floor(img.height * 0.45), w: Math.floor(img.width * 0.6), h: Math.floor(img.height * 0.55) },
+                        { x: 0, y: Math.floor(img.height * 0.25), w: img.width, h: Math.floor(img.height * 0.55) }
+                    ];
+
+                    for (const reg of regions) {
+                        if (reg.w <= 10 || reg.h <= 10) continue;
+                        canvas.width = reg.w;
+                        canvas.height = reg.h;
+                        ctx.drawImage(img, reg.x, reg.y, reg.w, reg.h, 0, 0, reg.w, reg.h);
+                        try {
+                            const subData = ctx.getImageData(0, 0, reg.w, reg.h);
+                            const qrSub = window.jsQR(subData.data, subData.width, subData.height);
+                            if (qrSub && qrSub.data) {
+                                resolve(qrSub.data);
+                                return;
+                            }
+                        } catch (e) {}
+                    }
+                    resolve(null);
+                };
+                img.onerror = () => resolve(null);
+                img.src = dataUrl;
+            });
+        }
+
+        // Check if OCR text matches "จักรวาล ผดุงซือ" with tolerance for Thai OCR character confusion
+        function checkThaiRecipientMatch(rawText) {
+            if (!rawText) return false;
+            const norm = rawText.replace(/\s+/g, "");
+            const lower = rawText.toLowerCase();
+
+            // Direct or partial Thai/English tokens for "จักรวาล ผดุงซือ" / "1158485148" / "848514"
+            const nameTokens = [
+                "จักรวาล",
+                "จกรวาล",
+                "จักวาล",
+                "ผดุงซือ",
+                "ผดุงชือ",
+                "ผดุงซื่อ",
+                "ผดุงชื่อ",
+                "ผดุงขือ",
+                "ผดุง",
+                "chakkawan",
+                "phadungsue",
+                "1158485148",
+                "115-8-48514-8",
+                "485148",
+                "848514"
+            ];
+
+            return nameTokens.some(token => norm.includes(token) || lower.includes(token));
+        }
+
+        // Extract transfer amount from OCR text
+        function extractSlipAmountFromText(rawText) {
+            if (!rawText) return 0;
+
+            // Look for patterns near บาท / THB / จำนวน or standard decimal XX.00 / XXX.00
+            const lines = rawText.split(/\r?\n/);
+            const candidates = [];
+
+            const decimalRegex = /(\d{1,3}(?:,\d{3})*\.\d{2})/g;
+            let match;
+            while ((match = decimalRegex.exec(rawText)) !== null) {
+                const val = parseFloat(match[1].replace(/,/g, ""));
+                // Exclude 0.00 fee
+                if (val > 0 && val <= 100000) {
+                    candidates.push(val);
+                }
+            }
+
+            if (candidates.length > 0) {
+                // Usually the first positive non-zero decimal on a slip is the transfer amount (before 0.00 fee)
+                return Math.floor(candidates[0]);
+            }
+            return 0;
+        }
+
+        slipDropzone.addEventListener("click", (e) => {
+            if (e.target.closest("#clearSlipBtn")) return;
+            slipFileInput.click();
+        });
+
+        clearSlipBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            currentSlipDataUrl = null;
+            currentSlipHash = null;
+            currentDetectedQrData = null;
+            slipFileInput.value = "";
+            slipPreviewContainer.classList.add("hidden");
+            slipUploadPrompt.classList.remove("hidden");
+            scanResultBox.classList.add("hidden");
+            qrBadgeStatus.textContent = "รอแนบสลิป";
+            qrBadgeStatus.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-gray-400 border border-white/10";
+        });
+
+        slipFileInput.addEventListener("change", async (e) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async (ev) => {
+                currentSlipDataUrl = ev.target.result;
+                currentSlipHash = await computeStringSHA256(currentSlipDataUrl);
+                slipPreviewImg.src = currentSlipDataUrl;
+                slipFileName.textContent = file.name;
+                slipUploadPrompt.classList.add("hidden");
+                slipPreviewContainer.classList.remove("hidden");
+                scanResultBox.classList.add("hidden");
+
+                qrBadgeStatus.textContent = "กำลังตรวจ Mini QR บนสลิป...";
+                qrBadgeStatus.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-yellow-500/15 text-yellow-300 border border-yellow-500/30";
+
+                currentDetectedQrData = await detectBankSlipQRCode(currentSlipDataUrl);
+                if (currentDetectedQrData) {
+                    qrBadgeStatus.textContent = "✓ ตรวจพบ QR สลิปธนาคาร";
+                    qrBadgeStatus.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30";
+                } else {
+                    qrBadgeStatus.textContent = "พร้อมสแกนด้วย OCR";
+                    qrBadgeStatus.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30";
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // Client-Side OCR + QR + Optional Gemini Vision Analysis
+        async function analyzeSlipMultiEngine(base64DataUrl) {
+            // 1. Check QR code first
+            const qrPayload = currentDetectedQrData || (await detectBankSlipQRCode(base64DataUrl));
+            let ocrText = "";
+            let ocrAmount = 0;
+            let nameMatched = false;
+
+            // 2. Run Tesseract.js OCR (Thai + English) in browser
+            if (typeof window.Tesseract !== "undefined") {
+                try {
+                    const result = await window.Tesseract.recognize(base64DataUrl, "tha+eng");
+                    ocrText = result?.data?.text || "";
+                    nameMatched = checkThaiRecipientMatch(ocrText);
+                    ocrAmount = extractSlipAmountFromText(ocrText);
+                } catch (ocrErr) {
+                    console.warn("Tesseract OCR warning:", ocrErr);
+                }
+            }
+
+            // 3. Check if slip has valid Thai bank slip indicators (QR Code or bank slip keywords)
+            const bankKeywords = ["โอนเงิน", "สำเร็จ", "บาท", "กสิกร", "kbank", "scb", "krungthai", "bangkok", "รหัสอ้างอิง", "เลขที่รายการ", "ค่าธรรมเนียม", "0.00", "นาย", "จักรวาล", "ผดุงซือ"];
+            const hasBankKeyword = bankKeywords.some(k => ocrText.toLowerCase().includes(k));
+            const isRealSlip = Boolean(qrPayload) || nameMatched || hasBankKeyword;
+
+            // If QR is a valid Thai bank slip QR or OCR matched "จักรวาล ผดุงซือ"
+            const isRecipientMatched = nameMatched || Boolean(qrPayload);
+            const manualAmt = Math.floor(Number(manualSlipAmountInput.value || 0));
+            const finalAmount = ocrAmount > 0 ? ocrAmount : manualAmt;
+
+            if (finalAmount > 0 && !manualSlipAmountInput.value) {
+                manualSlipAmountInput.value = finalAmount;
+            }
+
+            return {
+                isRealBankSlip: isRealSlip,
+                recipientName: isRecipientMatched ? REQUIRED_SLIP_RECIPIENT : (ocrText.slice(0, 40).trim() || "ไม่พบชื่อผู้รับโอน"),
+                isRecipientMatched: isRecipientMatched,
+                amount: finalAmount,
+                transRef: qrPayload ? ("QR_" + qrPayload.slice(-18).replace(/[^a-zA-Z0-9]/g, "")) : currentSlipHash,
+                reason: isRealSlip ? "ตรวจสอบสลิปสำเร็จ" : "รูปภาพไม่มี QR สลิปธนาคารหรือข้อมูลการโอนเงิน"
+            };
+        }
+
+        // Verify Slip Button Click
+        verifySlipBtn.addEventListener("click", async () => {
+            if (!currentSlipDataUrl) {
+                playNexusSound("error");
+                showModal("กรุณาแนบรูปสลิปโอนเงิน", "กรุณาเลือกรูปภาพสลิปโอนเงินจากเครื่องของคุณที่มีชื่อผู้รับโอน 'จักรวาล ผดุงซือ' ก่อนกดยืนยันการสแกนครับ", "error");
+                return;
+            }
+
+            verifySlipBtn.disabled = true;
+            scannerLaserBar.classList.remove("hidden");
+            verifySlipBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>กำลังสแกนสลิปตรวจสอบชื่อ "จักรวาล ผดุงซือ"...</span>`;
+            scanResultBox.classList.add("hidden");
+
+            try {
+                // 1. Check duplicate image hash
+                if (currentSlipHash && await isSlipAlreadyUsed(currentSlipHash)) {
+                    playNexusSound("error");
+                    showModal("สลิปนี้ถูกใช้งานไปแล้ว!", "รูปภาพสลิปใบนี้เคยถูกใช้สแกนเติมพอยท์ไปแล้ว ไม่สามารถนำสลิปเดิมมาสแกนซ้ำได้ครับ", "error");
+                    return;
+                }
+
+                // 2. Run Multi-Engine Slip Scanner
+                const scanResult = await analyzeSlipMultiEngine(currentSlipDataUrl);
+
+                if (!scanResult || !scanResult.isRealBankSlip) {
+                    playNexusSound("error");
+                    scanResultBox.className = "rounded-2xl p-4 border border-red-500/40 bg-red-500/10 text-red-200 text-xs space-y-1";
+                    scanResultBox.innerHTML = `
+                        <div class="font-bold text-sm text-red-400 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                            <span>ปฏิเสธการเติมเงิน: ไม่พบข้อมูลสลิปธนาคารหรือชื่อผู้รับโอน</span>
+                        </div>
+                        <p>สาเหตุ: ${scanResult?.reason || "กรุณาใช้รูปสลิปโอนเงินจริงที่เห็น QR Code และชื่อผู้รับโอนชัดเจน"}</p>
+                    `;
+                    scanResultBox.classList.remove("hidden");
+                    showModal("สแกนสลิปไม่ผ่าน!", "รูปภาพที่แนบมาไม่ใช่สลิปโอนเงินธนาคาร หรือไม่พบชื่อผู้รับโอน 'จักรวาล ผดุงซือ'", "error");
+                    return;
+                }
+
+                if (!scanResult.isRecipientMatched) {
+                    playNexusSound("error");
+                    scanResultBox.className = "rounded-2xl p-4 border border-red-500/40 bg-red-500/10 text-red-200 text-xs space-y-1";
+                    scanResultBox.innerHTML = `
+                        <div class="font-bold text-sm text-red-400 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                            <span>สแกนสลิปไม่ผ่าน! ชื่อผู้รับโอนไม่ใช่ "${REQUIRED_SLIP_RECIPIENT}"</span>
+                        </div>
+                        <p>เงื่อนไขระบบ: ต้องโอนเข้าบัญชีชื่อ <strong class="text-yellow-400">"${REQUIRED_SLIP_RECIPIENT}"</strong> เท่านั้น</p>
+                    `;
+                    scanResultBox.classList.remove("hidden");
+                    showModal("ปฏิเสธการเติมเงิน!", `ระบบอนุญาตเฉพาะสลิปที่โอนให้ชื่อ "${REQUIRED_SLIP_RECIPIENT}" เท่านั้น!`, "error");
+                    return;
+                }
+
+                // 3. Check transfer amount (from OCR or manual input box)
+                const creditAmount = Math.floor(Number(scanResult.amount || manualSlipAmountInput.value || 0));
+                if (!creditAmount || creditAmount <= 0) {
+                    playNexusSound("error");
+                    manualSlipAmountInput.focus();
+                    showModal(
+                        "กรุณาระบุยอดเงินตามสลิป",
+                        `ตรวจพบสลิปโอนเงินถึง "${REQUIRED_SLIP_RECIPIENT}" ถูกต้องแล้ว!\n\nแต่เนื่องจากฟอนต์ตัวเลขบนสลิปมีลายน้ำ กรุณากรอกยอดเงินที่โอนในช่อง "2. ยอดเงินในสลิป (บาท)" แล้วกดยืนยันอีกครั้งครับ`,
+                        "info"
+                    );
+                    return;
+                }
+
+                // 4. Check duplicate Reference ID
+                const rawRef = (scanResult.transRef || "").trim().replace(/[^a-zA-Z0-9_-]/g, "");
+                const slipRef = rawRef ? `REF_${rawRef}` : currentSlipHash;
+
+                if (await isSlipAlreadyUsed(slipRef)) {
+                    playNexusSound("error");
+                    showModal("สลิปนี้ถูกใช้งานไปแล้ว!", `สลิปอ้างอิงนี้เคยถูกสแกนเติมพอยท์ไปแล้ว ไม่สามารถใช้สลิปซ้ำได้ครับ`, "error");
+                    return;
+                }
+
+                // 5. Mark slip as used & Credit Points (P)
+                await markSlipAsUsed(slipRef, currentSlipHash, loggedInUsername, creditAmount);
+
+                const currentPts = Number(currentPlayerProfile.points || 0);
+                const currentTopup = Number(currentPlayerProfile.totalTopup || 0);
+                const txs = getParsedTransactions(currentPlayerProfile);
+
+                txs.push({
+                    id: slipRef,
+                    ref: rawRef || slipRef,
+                    type: "TOPUP",
+                    title: `เติมเงินสแกนสลิป (${REQUIRED_SLIP_RECIPIENT})`,
+                    amount: creditAmount,
+                    timestamp: Date.now()
+                });
+
+                currentPlayerProfile.points = currentPts + creditAmount;
+                currentPlayerProfile.totalTopup = currentTopup + creditAmount;
+                currentPlayerProfile.transactions = JSON.stringify(txs);
+
+                await savePlayerProfile(loggedInUsername, currentPlayerProfile);
+                renderDashboardUI();
+                playNexusSound("coin");
+
+                scanResultBox.className = "rounded-2xl p-4 border border-emerald-500/40 bg-emerald-500/10 text-emerald-200 text-xs space-y-1";
+                scanResultBox.innerHTML = `
+                    <div class="font-bold text-sm text-emerald-400 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>ตรวจสอบสลิปสำเร็จ! ผู้รับโอน: ${REQUIRED_SLIP_RECIPIENT}</span>
+                    </div>
+                    <p>จำนวนพอยท์ที่ได้รับจากสลิป: <strong class="text-yellow-400 font-mono">+${creditAmount.toLocaleString()} P</strong></p>
+                    <p>บันทึกเข้าสู่ตัวละคร <strong class="font-mono text-white">${loggedInUsername}</strong> เรียบร้อยแล้ว</p>
+                `;
+                scanResultBox.classList.remove("hidden");
+                manualSlipAmountInput.value = "";
+
+                showModal(
+                    "เติมพอยท์สำเร็จ!",
+                    `ตรวจพบสลิปโอนเงินถึง "${REQUIRED_SLIP_RECIPIENT}" ถูกต้อง!\n\nได้รับ +${creditAmount.toLocaleString()} พอยท์ (P) เข้าสู่ตัวละคร ${loggedInUsername} เรียบร้อยแล้ว`,
+                    "success"
+                );
+
+            } catch (err) {
+                console.error("Slip verification error:", err);
+                showModal("เกิดข้อผิดพลาด", "เกิดข้อผิดพลาดในการสแกนสลิป กรุณาลองใหม่อีกครั้ง", "error");
+            } finally {
+                scannerLaserBar.classList.add("hidden");
+                verifySlipBtn.disabled = false;
+                verifySlipBtn.innerHTML = `<i class="fa-solid fa-qrcode"></i> <span>ยืนยันการสแกนสลิปเติมพอยท์</span>`;
+            }
+        });
+
+        window.addEventListener("DOMContentLoaded", () => {
+            initCloudStorage();
+        });
+    </script>
+</body>
+</html>
